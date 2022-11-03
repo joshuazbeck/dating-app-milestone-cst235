@@ -1,0 +1,95 @@
+input {
+    margin-bottom: 0.5rem;
+}
+h1, h2, h3, h4, h5, h6 {
+    color: #219ebc;
+     font-weight: 600;
+}
+h3 {
+    padding-bottom: 3rem;
+}
+h1 {
+    padding-top: 3rem;
+    padding-bottom: 1rem;
+}
+
+/* Some code based off a code example by Onurhan Demir  */
+body {
+   background-color: #023047;
+   text-align: center;
+    padding-left: 0;
+}
+nav ul {
+    display: flex;
+    padding-left: 1rem;
+    margin: auto;
+    padding-right: 1rem;
+}
+nav {
+    display: flex;
+}
+
+nav ul li {
+    display: inline-block;
+    padding-left: auto;
+    padding-right: auto;
+    width: 100%;
+    margin-right: 30px;
+    margin-left: 30px;
+}
+
+nav ul li a {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    font-weight: 100;
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    color: #ffb703;
+}
+
+nav ul li a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 10;
+    width: 0%;
+    background-color: #fb8500;
+    height: 2px;
+    transition: 300ms all;
+    transition: 300ms all;
+}
+
+nav ul li a:hover::after {
+    width: 100%;
+}
+
+nav ul li a:hover {
+    color: #fb8500;
+}
+
+.copyright {
+    font-weight: 100;
+    font-size: 10px;
+	color:#8ecae6;
+}
+div{
+    font-weight: 200;
+	color:#8ecae6;
+}
+
+nav ul li a {
+    position: relative;
+}
+
+nav ul li a::after {
+    content: "";
+    display: block;
+    position: absolute;
+    transition: 300ms all;
+}
+
+nav ul li a:hover::after {
+    width: 100%;
+
+}

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:c="http://java.sun.com/jstl/core">
+    
+    <ui:composition>
+    	<!-- Some code based off a code example by Onurhan Demir  -->
+    	<nav>
+	        <ul>
+	            <li><a href="index.xhtml">Home</a></li>
+	            <c:if test="#{userInstance.loggedIn}">
+	            	<li><a href="#{loginController.logout()}">Logout</a></li>
+	            	<li><a href="products.xhtml">Products</a></li>
+	            </c:if>
+	           	<c:if test="#{not userInstance.loggedIn}">
+	           		<li><a href="registration_form.xhtml">Register</a></li>
+	            	<li><a href="login_form.xhtml">Login</a></li>
+	            </c:if>
+	            
+	        </ul>
+    	</nav>
+    </ui:composition>
+</html>
