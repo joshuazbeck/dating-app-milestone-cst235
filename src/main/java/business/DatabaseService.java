@@ -40,6 +40,8 @@ public class DatabaseService implements DatabaseServiceInterface {
 	//The filename to store the users
 	private String filename = "users.ser";
 	
+	private List<User> users = new ArrayList<User>();
+	
 	/**
 	 * Add a user to the database
 	 * @param user - User
@@ -132,10 +134,22 @@ public class DatabaseService implements DatabaseServiceInterface {
 	}
 	public DatabaseService() {
 		//TODO: Create DatingUser when DatingUser is implemented
-		this.addUsers(new User("xUser", "xLast", "xemail@email.com", BigInteger.valueOf(8675309) , "xuser", "xpass", new DatingUser()));
-		this.addUsers(new User("yUser", "yLast", "yemail@email.com", BigInteger.valueOf(8675309), "yuser", "ypass", new DatingUser()));
-		this.addUsers(new User("zUser", "zLast", "zemail@email.com", BigInteger.valueOf(8675309), "zuser", "zpass", new DatingUser()));
-		this.addUsers(new User("tUser", "tLast", "temail@email.com", BigInteger.valueOf(8675309), "tuser", "tpass", new DatingUser()));
+		users.add(new User("xUser", "xLast", "xemail@email.com", BigInteger.valueOf(8675309) , "xuser", "xpass", new DatingUser()));
+		users.add(new User("yUser", "yLast", "yemail@email.com", BigInteger.valueOf(8675309), "yuser", "ypass", new DatingUser()));
+		users.add(new User("zUser", "zLast", "zemail@email.com", BigInteger.valueOf(8675309), "zuser", "zpass", new DatingUser()));
+		users.add(new User("tUser", "tLast", "temail@email.com", BigInteger.valueOf(8675309), "tuser", "tpass", new DatingUser()));
+		/*
+		 * this.addUsers(new User("xUser", "xLast", "xemail@email.com",
+		 * BigInteger.valueOf(8675309) , "xuser", "xpass", new DatingUser()));
+		 * this.addUsers(new User("yUser", "yLast", "yemail@email.com",
+		 * BigInteger.valueOf(8675309), "yuser", "ypass", new DatingUser()));
+		 * this.addUsers(new User("zUser", "zLast", "zemail@email.com",
+		 * BigInteger.valueOf(8675309), "zuser", "zpass", new DatingUser()));
+		 * this.addUsers(new User("tUser", "tLast", "temail@email.com",
+		 * BigInteger.valueOf(8675309), "tuser", "tpass", new DatingUser()));
+		 */	}
+	public List<User> getUsers() {
+		return users;
 	}
 	
 }
