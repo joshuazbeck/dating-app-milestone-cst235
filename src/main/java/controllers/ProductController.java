@@ -19,7 +19,7 @@ import business.DatabaseServiceInterface;
 @ManagedBean
 @ViewScoped
 public class ProductController {
-	//TODO: Eventual feature to display products
+	
 	@Inject
 	DatabaseServiceInterface service;
 	

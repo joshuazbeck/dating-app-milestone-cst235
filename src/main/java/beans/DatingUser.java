@@ -1,6 +1,7 @@
 package beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -104,6 +105,11 @@ public class DatingUser implements Serializable {
 		this.userRef = userRef;
 	}
 	public DatingUser() {
+		education = "Student at GCU";
+		compatibilityScore = 99.9f;
+		hairColor = "brown";
+		eyeColor = "brown";
+		heightInches = 70;
 	}
 
 
