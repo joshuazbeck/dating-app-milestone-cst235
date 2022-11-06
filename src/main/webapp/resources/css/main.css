@@ -91,5 +91,9 @@ nav ul li a::after {
 
 nav ul li a:hover::after {
     width: 100%;
+}
 
+.card {
+	border: 1px solid #fb8500;
+	margin-bottom: 2rem;
 }
