@@ -21,6 +21,8 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	boolean loggedIn;
+	
+	private int id;
 
 	@NotNull()
 	@Size(min=5, max=15) 
@@ -108,6 +110,14 @@ public class User implements Serializable {
 
 	public void setDatingUser(DatingUser datingUser) {
 		this.datingUser = datingUser;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public User(String firstName, String lastName, String emailAddress, BigInteger phoneNumber, String username,
