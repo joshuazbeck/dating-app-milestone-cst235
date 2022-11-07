@@ -24,6 +24,10 @@ public class LoginController {
 	@Inject
 	AuthenticationServiceInterface authService;
 	
+	boolean loggedIn = false;
+	public boolean getLoggedIn() {
+		return this.loggedIn;
+	}
 	/**
 	 * This code handles logging in a user
 	 * @return - A page either success or failure
@@ -42,13 +46,16 @@ public class LoginController {
 			
 			if (u != null) {
 				//There was a user for the user name and password so return success
+				loggedIn = true;
 				return "products.xhtml";
 			} else {
 				//Fail login as no users matched
+				loggedIn = false;
 				return "login_fail.xhtml";
 			}
 		} else {
 			//Fail login
+			loggedIn = false;
 			return "login_fail.xhtml";
 		}
 
@@ -62,6 +69,7 @@ public class LoginController {
 	public String logout() {
 		
 		this.authService.invalidateUser();
+		loggedIn = false;
 		return "index.xhtml";
 	}
 	

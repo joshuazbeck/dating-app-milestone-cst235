@@ -13,7 +13,7 @@ import javax.faces.bean.SessionScoped;
  * @author Josh Beck
  *
  */
-@ManagedBean
+@ManagedBean(name="datingUser")
 @SessionScoped
 public class DatingUser implements Serializable {
 	
@@ -25,9 +25,8 @@ public class DatingUser implements Serializable {
 	
 	List<String> languagesSpoken;
 	
+	//TODO: Calculate compatability score later based on other users
 	float compatibilityScore;
-	
-	List<DatingUser> previousRelationships;
 	
 	String hairColor;
 	
@@ -61,12 +60,6 @@ public class DatingUser implements Serializable {
 	public void setCompatibilityScore(float compatibilityScore) {
 		this.compatibilityScore = compatibilityScore;
 	}
-	public List<DatingUser> getPreviousRelationships() {
-		return previousRelationships;
-	}
-	public void setPreviousRelationships(List<DatingUser> previousRelationships) {
-		this.previousRelationships = previousRelationships;
-	}
 	public String getHairColor() {
 		return hairColor;
 	}
@@ -92,24 +85,18 @@ public class DatingUser implements Serializable {
 		this.userRef = userRef;
 	}
 	public DatingUser(List<String> hobbies, String education, List<String> languagesSpoken, float compatibilityScore,
-			List<DatingUser> previousRelationships, String hairColor, String eyeColor, int heightInches, User userRef) {
+			String hairColor, String eyeColor, int heightInches, User userRef) {
 		super();
 		this.hobbies = hobbies;
 		this.education = education;
 		this.languagesSpoken = languagesSpoken;
 		this.compatibilityScore = compatibilityScore;
-		this.previousRelationships = previousRelationships;
 		this.hairColor = hairColor;
 		this.eyeColor = eyeColor;
 		this.heightInches = heightInches;
 		this.userRef = userRef;
 	}
 	public DatingUser() {
-		education = "Student at GCU";
-		compatibilityScore = 99.9f;
-		hairColor = "brown";
-		eyeColor = "brown";
-		heightInches = 70;
 	}
 
 

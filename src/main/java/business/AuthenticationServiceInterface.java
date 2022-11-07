@@ -15,6 +15,13 @@ public interface AuthenticationServiceInterface {
 	 * @return - a user if one exists matching the user name and password
 	 */
 	 public User validateUser(String username, String password);
+	 
+	 /**
+	  * Get the logged in user
+	  * @return = the logged in user or null if none
+	  */
+	 public User getLoggedInUser();
+	 
 	 /**
 	  * Check if the user is logged in
 	  * @return - true or false if user was logged in

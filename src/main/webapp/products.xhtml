@@ -8,27 +8,35 @@
 <h:body>
 	<ui:composition template="/layouts/template.xhtml">
 		<ui:define name="content">
-			<h4>Product Page Coming in Future Milestones</h4>
 			<p></p>
 			<br />
+			<p>Only displaying dating users with linked user accounts</p>
 			<div class="container mx-auto mt-4">
 				<div class="row">
-					<c:forEach items="#{productController.service.users}" var="u">
+					<c:forEach items="#{productController.service.datingUsers}" var="dU">
+					<c:if test="#{dU.userRef != null}">
 						<div class="col-md-4">
 							<div class="card" style="width: 18rem;">
 					<!--
 						<img class="card-img-top" src="" alt="Card image cap">
 						-->
-								<div class="card-body">
-									<h5 class="card-title">#{u.firstName}, #{u.lastName}</h5>
-									<p>Education: #{u.datingUser.education}</p>
-									<p>Compatibility Score: #{u.datingUser.compatibilityScore}</p>
-									<p>Hair Color:#{u.datingUser.hairColor}</p>
-									<p>Eye Color: #{u.datingUser.eyeColor}</p>
-									<p>Height (inches): #{u.datingUser.heightInches}</p>
-								</div>
+								
+									<div class="card-body">
+									
+										<h5 class="card-title">#{dU.userRef.firstName}, #{dU.userRef.lastName}</h5>
+										<p>Education: #{dU.education}</p>
+										<p>Hobbies:</p>
+										<ui:repeat var="item" value="#{dU.hobbies}"> <p>#{item}</p> </ui:repeat>
+										<p>Languages Spoken</p>
+										<ui:repeat var="item" value="#{dU.languagesSpoken}"> <p>#{item}</p> </ui:repeat>
+										<p>Hair Color:#{dU.hairColor}</p>
+										<p>Eye Color: #{dU.eyeColor}</p>
+										<p>Height (inches): #{dU.heightInches}</p>
+									</div>
+								
 							</div>
 						</div>
+						</c:if>
 					</c:forEach>
 				</div>
 			</div>

@@ -78,11 +78,12 @@ public class DatabaseService implements DatabaseServiceInterface {
 		return null;
 	}
 	
+	
 	/**
 	 * Get all the users stored in a file
 	 * @return - a list of users in the filesystem
 	 */
-	private List<User> getAllUsers(){
+	public List<User> getAllUsers(){
 		List<User> usersRef = new ArrayList<User>();
 		  
         try {   
@@ -132,24 +133,96 @@ public class DatabaseService implements DatabaseServiceInterface {
         }
  
 	}
+	
+	
 	public DatabaseService() {
 		//TODO: Create DatingUser when DatingUser is implemented
 		users.add(new User("xUser", "xLast", "xemail@email.com", BigInteger.valueOf(8675309) , "xuser", "xpass", new DatingUser()));
 		users.add(new User("yUser", "yLast", "yemail@email.com", BigInteger.valueOf(8675309), "yuser", "ypass", new DatingUser()));
 		users.add(new User("zUser", "zLast", "zemail@email.com", BigInteger.valueOf(8675309), "zuser", "zpass", new DatingUser()));
 		users.add(new User("tUser", "tLast", "temail@email.com", BigInteger.valueOf(8675309), "tuser", "tpass", new DatingUser()));
-		/*
-		 * this.addUsers(new User("xUser", "xLast", "xemail@email.com",
-		 * BigInteger.valueOf(8675309) , "xuser", "xpass", new DatingUser()));
-		 * this.addUsers(new User("yUser", "yLast", "yemail@email.com",
-		 * BigInteger.valueOf(8675309), "yuser", "ypass", new DatingUser()));
-		 * this.addUsers(new User("zUser", "zLast", "zemail@email.com",
-		 * BigInteger.valueOf(8675309), "zuser", "zpass", new DatingUser()));
-		 * this.addUsers(new User("tUser", "tLast", "temail@email.com",
-		 * BigInteger.valueOf(8675309), "tuser", "tpass", new DatingUser()));
-		 */	}
+		
+	}
 	public List<User> getUsers() {
 		return users;
 	}
+	
+	//The filename to store the users
+	private String product_file = "dating_users.ser";
+		
+		private List<DatingUser> datingUsers = new ArrayList<DatingUser>();
+		
+		/**
+		 * Add a user to the database
+		 * @param user - User
+		 */
+		public void addDatingUser(DatingUser user) {
+			
+			//Add the user to the database
+			List<DatingUser> users = getDatingUsers();
+			users.add(user);
+			setAllDatingUsers(users);
+			
+		}
+		
+
+		
+		
+		/**
+		 * Get all the users stored in a file
+		 * @return - a list of users in the filesystem
+		 */
+		public List<DatingUser> getDatingUsers(){
+			List<DatingUser> usersRef = new ArrayList<DatingUser>();
+			  
+	        try {   
+	        	
+	            //Get the file
+	            FileInputStream file = new FileInputStream(product_file);
+	            ObjectInputStream in = new ObjectInputStream(file);
+	              
+	            //Deserialize the object
+	            usersRef = (List<DatingUser>)in.readObject();
+	              
+	            in.close();
+	            file.close();
+	              
+	        } catch(IOException ex) {
+	            System.out.println("IOException is caught" + ex.getMessage());
+	        }
+	          
+	        catch(ClassNotFoundException ex)
+	        {
+	            System.out.println("ClassNotFoundException is caught");
+	        }
+	        return usersRef;
+		}
+		/**
+		 * Set all the users in the filesystem
+		 * @param users - a list of users
+		 */
+		private void setAllDatingUsers(List<DatingUser> users) {
+	        
+	        try {   
+	        	
+	        
+	        	//Accessing the file
+	            FileOutputStream file = new FileOutputStream(product_file);
+	            ObjectOutputStream out = new ObjectOutputStream(file);
+	              
+	            //Writing the object to the filesystem
+	            out.writeObject(users);
+	              
+	            out.close();
+	            file.close();
+	              
+	        } catch(IOException ex) {
+	        	
+	            System.out.println("IOException is caught" +  ex.getMessage());
+	            
+	        }
+	 
+		}
+
 	
 }

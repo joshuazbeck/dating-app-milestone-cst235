@@ -54,6 +54,10 @@ public class AuthenticationService implements AuthenticationServiceInterface {
 		 System.out.println("logged in " + FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userInstance").toString());
 		 return FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userInstance") != null;
 	 }
+	 public User getLoggedInUser(){
+		 //Check the context if a user is logged in
+		 return (User)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userInstance");
+	 }
 	 public void invalidateUser(){
 		 //Remove the user from the context
 		 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("userInstance");

@@ -11,14 +11,15 @@
     	<nav>
 	        <ul>
 	            <li><a href="index.xhtml">Home</a></li>
-	            <c:if test="#{userInstance.loggedIn}">
+	            <c:if test="#{loginController.loggedIn}">
 	            	<li><a href="#{loginController.logout()}">Logout</a></li>
-	            	<li><a href="products.xhtml">Products</a></li>
 	            </c:if>
 	           	<c:if test="#{not userInstance.loggedIn}">
 	           		<li><a href="registration_form.xhtml">Register</a></li>
 	            	<li><a href="login_form.xhtml">Login</a></li>
 	            </c:if>
+	            <li><a href="products_form.xhtml">Add Dating Profile</a></li>
+	            <li><a href="products.xhtml">All Dating Users</a></li>
 	            
 	        </ul>
     	</nav>

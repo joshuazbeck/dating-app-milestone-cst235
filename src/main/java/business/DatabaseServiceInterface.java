@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.ejb.Local;
 
+import beans.DatingUser;
 import beans.User;
 
 @Local
@@ -30,5 +31,15 @@ public interface DatabaseServiceInterface {
 	 */
 	public User userExists(String username, String password);
 	
+	public List<User> getAllUsers();
+	
+	/**
+	 * Add a user to the database
+	 * @param user - User
+	 */
+	public void addDatingUser(DatingUser user);
+	
+	public List<DatingUser> getDatingUsers();
+
 	
 }
