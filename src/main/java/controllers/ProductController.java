@@ -11,7 +11,7 @@ import javax.inject.Inject;
 import beans.DatingUser;
 import beans.User;
 import business.AuthenticationServiceInterface;
-import business.DatabaseServiceInterface;
+import data.DatabaseServiceInterface2;
 
 /**
  * The controller in charge of manipulating the FormController
@@ -23,12 +23,12 @@ import business.DatabaseServiceInterface;
 public class ProductController {
 	
 	@Inject
-	DatabaseServiceInterface service;
+	DatabaseServiceInterface2 service;
 	
 	@Inject
 	AuthenticationServiceInterface authService;
 
-	public DatabaseServiceInterface getService() {
+	public DatabaseServiceInterface2 getService() {
 		return service;
 	}
 	public String add() {
@@ -38,9 +38,9 @@ public class ProductController {
 		if (datingUser != null) {
 
 			//Add a user
-			datingUser.setUserRef(service.getAllUsers().get(0));
+			//datingUser.setUserRef(service.getAllUsers().get(0));
 
-			service.addDatingUser(datingUser);
+			//service.addDatingUser(datingUser);
 		} 
 		
 		return "products.xhtml";

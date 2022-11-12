@@ -8,6 +8,7 @@ import javax.faces.bean.SessionScoped;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+
 /**
  * A model that holds the User object and is used to compare username and password
  * Implements Serializable to make it writable to a file for storage
@@ -25,11 +26,11 @@ public class User implements Serializable {
 	private int id;
 
 	@NotNull()
-	@Size(min=5, max=15) 
+	@Size(min=2, max=15) 
 	String firstName;
 	
 	@NotNull()
-	@Size(min=5, max=15) 
+	@Size(min=2, max=15) 
 	String lastName;
 	
 	@NotNull()
@@ -37,6 +38,19 @@ public class User implements Serializable {
 	
 	@NotNull()
 	BigInteger phoneNumber;
+	
+	@NotNull
+	String address;
+	String address2;
+	@NotNull
+	String city;
+	@NotNull
+	String state;
+	@NotNull
+	String country;
+	
+	@NotNull
+	int zipcode;
 	
 	@NotNull()
 	@Size(min=5) 
@@ -86,6 +100,54 @@ public class User implements Serializable {
 
 	public void setPhoneNumber(BigInteger phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getAddress2() {
+		return address2;
+	}
+
+	public void setAddress2(String address2) {
+		this.address2 = address2;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public int getZipcode() {
+		return zipcode;
+	}
+
+	public void setZipcode(int zipcode) {
+		this.zipcode = zipcode;
 	}
 
 	public String getUsername() {

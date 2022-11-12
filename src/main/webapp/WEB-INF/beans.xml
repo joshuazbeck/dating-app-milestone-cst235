@@ -6,7 +6,7 @@
 
 	<alternatives>
 		<class>business.AuthenticationService</class>
-		<class>business.DatabaseService</class>
+		<class>data.DatabaseService2</class>
 	</alternatives>
 
 </beans>

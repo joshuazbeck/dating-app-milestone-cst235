@@ -43,7 +43,45 @@
 				requiredMessage="Please enter your phone number"
 				validatorMessage="Invalid phone number format">
 			</h:inputText><br></br>
-			
+			Address:<br></br>
+			<h:inputText 
+				value="#{user.address}" 
+				converterMessage="Please enter your street address."
+				requiredMessage="Please enter your street address."
+				validatorMessage="Invalid address.">
+			</h:inputText><br></br>
+			Address Line 2 (Optional):<br></br>
+			<h:inputText 
+				value="#{user.address2}">
+			</h:inputText><br></br>
+			City:<br></br>
+			<h:inputText 
+				value="#{user.city}" 
+				converterMessage="Please enter the name of your city."
+				requiredMessage="Please check the name of your city."
+				validatorMessage="Invalid city.">
+			</h:inputText><br></br>
+			State:<br></br>
+			<h:inputText 
+				value="#{user.state}" 
+				converterMessage="Please enter the name of your State."
+				requiredMessage="Please check the name of your state."
+				validatorMessage="Invalid phone number format">
+			</h:inputText><br></br>
+			Country:<br></br>
+			<h:inputText 
+				value="#{user.country}" 
+				converterMessage="Please enter the name of your country."
+				requiredMessage="Please check the name of your country"
+				validatorMessage="Invalid country">
+			</h:inputText><br></br>
+			Zip Code:<br></br>
+			<h:inputText 
+				value="#{user.zipcode}" 
+				converterMessage="Please enter digits only for your zipcode"
+				requiredMessage="Please enter your Zip code"
+				validatorMessage="Invalid Zipcode">
+			</h:inputText><br></br>
 			Username:<br></br>
 			<h:inputText 
 				value="#{user.username}"

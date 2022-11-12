@@ -42,7 +42,7 @@ public class LoginController {
 		if (user.getUsername() != null && user.getPassword() != null) {
 			
 			//Get the authenticator to handle accessing and setting the session
-			User u = this.authService.validateUser(user.getUsername(), user.getPassword());
+			User u = this.authService.validateUser(user);
 			
 			if (u != null) {
 				//There was a user for the user name and password so return success
