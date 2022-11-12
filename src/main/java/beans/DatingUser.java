@@ -19,6 +19,8 @@ public class DatingUser implements Serializable {
 	
 	private static final long serialVersionUID = 2L;
 	
+	int id;
+	
 	List<String> hobbies;
 	
 	String education;
@@ -36,6 +38,12 @@ public class DatingUser implements Serializable {
 	
 	User userRef;
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public List<String> getHobbies() {
 		return hobbies;
 	}
@@ -84,6 +92,8 @@ public class DatingUser implements Serializable {
 	public void setUserRef(User userRef) {
 		this.userRef = userRef;
 	}
+	
+	
 	public DatingUser(List<String> hobbies, String education, List<String> languagesSpoken, float compatibilityScore,
 			String hairColor, String eyeColor, int heightInches, User userRef) {
 		super();
@@ -97,6 +107,9 @@ public class DatingUser implements Serializable {
 		this.userRef = userRef;
 	}
 	public DatingUser() {
+	}
+	public DatingUser(String education) {
+		this.education = education;
 	}
 
 

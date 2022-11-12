@@ -8,6 +8,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 import beans.User;
+import data.DatabaseServiceInterface2;
 
 /**
  * This service helps to handle authentication for the application
@@ -23,8 +24,7 @@ public class AuthenticationService implements AuthenticationServiceInterface {
 	
 	//Get an instance of the database service used to handle the "database"
 	@Inject
-	DatabaseServiceInterface db;
-	
+	DatabaseServiceInterface2 db;
 	
 	/**
 	 * This method is used to validate a user exists
@@ -32,12 +32,12 @@ public class AuthenticationService implements AuthenticationServiceInterface {
 	 * @param password - the password
 	 * @return - a user if one exists matching the user name and password
 	 */
-	 public User validateUser(String username, String password){
+	 public User validateUser(User u){
 		 // Check the DB for a user with this user name and password
-		 User user = this.db.userExists(username, password);
+		 User user = this.db.getUserByUsername(u);
 		 
 		 // Check if a user was returned
-		 if (user != null) {
+		 if (user.getUsername() != null) {
 			 //Set the logged in value of the user to true
 			 user.setLoggedIn(true);
 			 //Save the user in the context to indicate a logged in user

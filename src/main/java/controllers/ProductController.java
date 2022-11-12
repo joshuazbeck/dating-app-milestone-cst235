@@ -1,17 +1,13 @@
 package controllers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 import beans.DatingUser;
-import beans.User;
 import business.AuthenticationServiceInterface;
-import business.DatabaseServiceInterface;
+import data.DatabaseServiceInterface2;
 
 /**
  * The controller in charge of manipulating the FormController
@@ -23,12 +19,12 @@ import business.DatabaseServiceInterface;
 public class ProductController {
 	
 	@Inject
-	DatabaseServiceInterface service;
+	DatabaseServiceInterface2 service;
 	
 	@Inject
 	AuthenticationServiceInterface authService;
 
-	public DatabaseServiceInterface getService() {
+	public DatabaseServiceInterface2 getService() {
 		return service;
 	}
 	public String add() {
@@ -36,10 +32,9 @@ public class ProductController {
 		DatingUser datingUser = context.getApplication().evaluateExpressionGet(context, "#{datingUser}", DatingUser.class);
 
 		if (datingUser != null) {
-
 			//Add a user
 			datingUser.setUserRef(service.getAllUsers().get(0));
-
+			
 			service.addDatingUser(datingUser);
 		} 
 		
