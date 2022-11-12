@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.ejb.Local;
 import javax.ejb.LocalBean;
@@ -32,31 +34,26 @@ public class DatabaseService2 implements DatabaseServiceInterface2 {
 	
 	//User table queries
 	private static final String INSERT_USER = "INSERT INTO user (firstname, lastname, phone_num, email, address_line1, address_line2, city, state, country, zipcode, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	private static final String FIND_BY_ID = "SELECT * FROM user WHERE user_id=?";
-	private static final String FIND_BY_USER = "SELECT * FROM user WHERE username=?";
-	private static final String FIND_ALL = "SELCT * FROM user ORDER BY user_id";
+	private static final String GET_BY_ID = "SELECT * FROM user WHERE user_id=?";
+	private static final String GET_BY_USER = "SELECT * FROM user WHERE username=?";
+	private static final String GET_ALL = "SELCT * FROM user";
 	private static final String UPDATE = "UPDATE user SET firstname=?, lastname=?, phone_num=?, email=?, username=?, password=? WHERE user_id=?";
 	private static final String DELETE = "DELETE FROM user WHERE user_id=?";
 	
 	//DatingUser table queries
 	private static final String INSERT_DU = "INSERT INTO dating_user (education, spoken_languages, hair_color, eye_color, height_inches, user_id) VALUES (?, ?, ?, ?, ?, ?)";
-	private static final String FIND_DU_ID = "SELECT * FROM dating_user WHERE dating_user_id=? AND user_id=?";
-	private static final String FIND_ALL_DU = "SELECT * FROM dating_user ORDER BY dating_user_id";
+	private static final String GET_DU_ID = "SELECT * FROM dating_user WHERE dating_user_id=? AND user_id=?";
+	private static final String GET_ALL_DU = "SELECT * FROM dating_user";
 	private static final String UPDATE_DU = "UPDATE dating_user SET ";
 	private static final String DELETE_DU = "DELETE FROM dating_user WHERE dating_user_id=?";
 	
 	//Hobby table queries
 	private static final String INSERT_HOBBY = "";
-	private static final String FIND_HOBBY_ID = "";
-	private static final String FIND_ALL_HOBBIES = "";
+	private static final String GET_HOBBY_ID = "";
+	private static final String GET_ALL_HOBBIES = "";
 	private static final String UPDATE_HOBBY = "";
 	private static final String DELETE_HOBBY = "";
 	
-	//Address table queries
-	private static final String INSERT_ADDRESS = "";
-	private static final String FIND_ADDRESS_ID = "";
-	private static final String UPDATE_ADDRESS = "";
-	private static final String DELETE_ADDRESS = "";
 	
 	/**
 	 * Add a user to the database
@@ -95,19 +92,24 @@ public class DatabaseService2 implements DatabaseServiceInterface2 {
 	 * @param user - User
 	 */
 	@Override
-	public User getAllUsers(User user) {
+	public List<User> getAllUsers() {
 		Connection conn = null;
-		PreparedStatement stmt = null;
+		Statement stmt = null;
 		try {
 			conn = getConnection();
-			stmt = conn.prepareStatement(FIND_ALL, Statement.RETURN_GENERATED_KEYS);
+			stmt = conn.createStatement();
 			
-			ResultSet rs = stmt.executeQuery();
-			
-			if (rs.next()) {
-				user.getId();
+			ResultSet rs = stmt.executeQuery(GET_ALL);
+			List<User> users = new ArrayList<User>();
+			while (rs.next()) {
+				int id = rs.getInt("user_id");
+				
+				users.add(new User(id));
+				//might need to add more parameters here later.
+				//not needed as of now.
 			}
-			return this.findUserById(user);
+			rs.close();
+			return users;
 			
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -121,12 +123,12 @@ public class DatabaseService2 implements DatabaseServiceInterface2 {
 	 * @param user - User
 	 */
 	@Override
-	public User findUserById(User user) {
+	public User getUserById(User user) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		try {
 			conn = getConnection();
-			stmt = conn.prepareStatement(FIND_BY_ID, Statement.RETURN_GENERATED_KEYS);
+			stmt = conn.prepareStatement(GET_BY_ID, Statement.RETURN_GENERATED_KEYS);
 			stmt.setInt(1, user.getId());
 			
 			ResultSet rs = stmt.executeQuery();
@@ -147,12 +149,12 @@ public class DatabaseService2 implements DatabaseServiceInterface2 {
 		}
 	}
 	@Override
-	public User findUserByUsername(User user) {
+	public User getUserByUsername(User user) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		try {
 			conn = getConnection();
-			stmt = conn.prepareStatement(FIND_BY_USER, Statement.RETURN_GENERATED_KEYS);
+			stmt = conn.prepareStatement(GET_BY_USER, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, user.getUsername());
 			
 			ResultSet rs = stmt.executeQuery();
@@ -221,124 +223,53 @@ public class DatabaseService2 implements DatabaseServiceInterface2 {
 		}
 	}
 	
-//	@Override
-//	public void addDatingUser(User user) {
-//		Connection conn = null;
-//		PreparedStatement stmt = null;
-//		try {
-//			DatingUser du = user.getDatingUser();
-//			
-//			conn = getConnection();
-//			stmt = conn.prepareStatement(INSERT_DU, Statement.RETURN_GENERATED_KEYS);
-//			stmt.setString(1, du.getEducation());
-//			stmt.setObject(2, du.getLanguagesSpoken());
-//			stmt.setString(3, du.getHairColor());
-//			stmt.setString(4, du.getEyeColor());
-//			stmt.setInt(5, du.getHeightInches());
-//			stmt.setInt(6, du.getUserRef().getId());
-//			
-//			stmt.executeUpdate();
-//		} catch (SQLException e) {
-//			throw new RuntimeException(e);
-//		}
-//		
-//	}
-//	@Override
-//	public DatingUser findAllDatingUsers(User user) {
-//		Connection conn = null;
-//		PreparedStatement stmt = null;
-//		try {
-//			conn = getConnection();
-//			stmt = conn.prepareStatement(FIND_ALL, Statement.RETURN_GENERATED_KEYS);
-//			
-//			ResultSet rs = stmt.executeQuery();
-//			
-//			if (rs.next()) {
-//				user.getDatingUser().getId();
-//			}
-//			return this.findDatingUserById(user);
-//			
-//		} catch (SQLException e) {
-//			throw new RuntimeException(e);
-//		} finally {
-//			close(stmt);
-//			close(conn);
-//		}
-//	}
-//	@Override
-//	public DatingUser findDatingUserById(User user) {
-//		Connection conn = null;
-//		PreparedStatement stmt = null;
-//		try {
-//			conn = getConnection();
-//			stmt = conn.prepareStatement(FIND_BY_ID, Statement.RETURN_GENERATED_KEYS);
-//			stmt.setInt(1, user.getDatingUser().getId());
-//			
-//			ResultSet rs = stmt.executeQuery();
-//			
-//			if (rs.next()) {
-//				DatingUser found = new DatingUser();
-//				found.setId(rs.getInt("dating_user_id"));
-//				
-//				return found;
-//			} else {
-//				return null;
-//			}
-//		} catch (SQLException e) {
-//			throw new RuntimeException(e);
-//		} finally {
-//			close(stmt);
-//			close(conn);
-//		}
-//	}
-//	@Override
-//	public void updateDatingUser(User user) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//	@Override
-//	public void deleteDatingUser(User user) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//	
-//	@Override
-//	public void addHobby(DatingUser du) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//	@Override
-//	public void updateHobby(DatingUser du) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//	@Override
-//	public void deleteHobby(DatingUser du) {
-//		// TODO Auto-generated method stub
-//
-//	}
-//	
-//	@Override
-//	public void addAddress(User user) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//	@Override
-//	public void updateAddress(User user) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//	@Override
-//	public void deleteAddress(User user) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//	
-//	@Override
-//	public void findAddress(User user) {
-//		// TODO Auto-generated method stub
-//		
-//	}
+	@Override
+	public void addDatingUser(DatingUser du) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		try {			
+			conn = getConnection();
+			stmt = conn.prepareStatement(INSERT_DU, Statement.RETURN_GENERATED_KEYS);
+			stmt.setString(1, du.getEducation());
+			stmt.setObject(2, du.getLanguagesSpoken());
+			stmt.setString(3, du.getHairColor());
+			stmt.setString(4, du.getEyeColor());
+			stmt.setInt(5, du.getHeightInches());
+			stmt.setInt(6, du.getUserRef().getId());
+			
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+	}
+	@Override
+	public List<DatingUser> getAllDatingUsers() {
+		Connection conn = null;
+		Statement stmt = null;
+		try {
+			conn = getConnection();
+			stmt = conn.createStatement();
+			
+			ResultSet rs = stmt.executeQuery(GET_ALL_DU);
+			
+			List<DatingUser> datingUsers = new ArrayList<DatingUser>();
+			while (rs.next()) {
+				String edu = rs.getString("education");
+				//need to set more keys
+				
+				datingUsers.add(new DatingUser(edu));
+			}
+			rs.close();
+			return datingUsers;
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			close(stmt);
+			close(conn);
+		}
+	}
 	
 	private Connection getConnection() {
 		try {

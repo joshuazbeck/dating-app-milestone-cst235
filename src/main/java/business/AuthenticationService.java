@@ -34,7 +34,7 @@ public class AuthenticationService implements AuthenticationServiceInterface {
 	 */
 	 public User validateUser(User u){
 		 // Check the DB for a user with this user name and password
-		 User user = this.db.findUserByUsername(u);
+		 User user = this.db.getUserByUsername(u);
 		 
 		 // Check if a user was returned
 		 if (user.getUsername() != null) {

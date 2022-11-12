@@ -198,4 +198,8 @@ public class User implements Serializable {
 		super();
 	}
 
+	public User(int id) {
+		this.id = id;
+	}
+
 }

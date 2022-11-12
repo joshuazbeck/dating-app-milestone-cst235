@@ -108,6 +108,9 @@ public class DatingUser implements Serializable {
 	}
 	public DatingUser() {
 	}
+	public DatingUser(String education) {
+		this.education = education;
+	}
 
 
 	
