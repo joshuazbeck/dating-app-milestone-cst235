@@ -11,6 +11,7 @@
 			<p></p>
 			<br />
 			<p>Find your future soul mate by browsing the options below!!!</p>
+			<h:form>
 			<div class="container mx-auto mt-4">
 				<div class="row">
 					<c:forEach items="#{productController.service.allDatingUsers}" var="dU">
@@ -22,8 +23,8 @@
 					-->
 							
 								<div class="card-body">
-								
-									<h5 class="card-title">#{dU.firstName}, #{dU.lastName}</h5>
+									<h:inputHidden value="#{dU.id}"></h:inputHidden>
+									<h5 class="card-title">#{dU.firstName} #{dU.lastName}</h5>
 									
 									<p class="bold">Education: </p>
 									<p>#{dU.education}</p>
@@ -48,15 +49,17 @@
 
 									<p class="bold">Phone #: </p>
 									<p>#{dU.phoneNumber}</p>
-				
+									
+									<h:commandButton value="Update" action="#{productController.showUpdateForm(dU)}" class="btn btn-primary"></h:commandButton>				
+									<h:commandButton value="Delete" action="#{productController.deleteDatingUser(dU)}" class="btn btn-primary"></h:commandButton>
 								</div>
-								
 							</div>
 						</div>
 						</c:if>
 					</c:forEach>
 				</div>
 			</div>
+			</h:form>
 		</ui:define>
 	</ui:composition>
 </h:body>

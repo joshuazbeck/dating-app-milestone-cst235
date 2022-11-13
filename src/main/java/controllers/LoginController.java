@@ -58,6 +58,7 @@ public class LoginController {
 			if (u != null) {
 				//There was a user for the user name and password so return success
 				loggedIn = true;
+				
 				return "products.xhtml";
 			} else {
 				//Fail login as no users matched
