@@ -45,4 +45,20 @@ public class UserController {
 		
 		return "products.xhtml";
 	}
+	
+	public String deleteUser (User u) {
+		System.out.println("Deleting user with:");
+		
+		System.out.println("name: " + u.getFirstName() + " ID: " + u.getId());
+		try {
+			service.deleteUser(u);
+		} catch (RuntimeException | SQLException e) {
+			FacesContext context1 = FacesContext.getCurrentInstance();
+			context1.addMessage( null, new FacesMessage( "There was an issue connecting to the database.  Try again later." ));
+			System.out.println(e.getLocalizedMessage());
+			return "";
+		}
+		
+		return "products.xhtml";
+	}
 }
