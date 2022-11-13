@@ -50,8 +50,9 @@
 									<p class="bold">Phone #: </p>
 									<p>#{dU.phoneNumber}</p>
 									
-									<h:commandButton value="Update" action="#{productController.showUpdateForm(dU)}"></h:commandButton>								</div>
-								
+									<h:commandButton value="Update" action="#{productController.showUpdateForm(dU)}" class="btn btn-primary"></h:commandButton>				
+									<h:commandButton value="Delete" action="#{productController.deleteDatingUser(dU)}" class="btn btn-primary"></h:commandButton>
+								</div>
 							</div>
 						</div>
 						</c:if>

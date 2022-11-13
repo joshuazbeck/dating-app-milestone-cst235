@@ -354,6 +354,7 @@ public class DatabaseService2 implements DatabaseServiceInterface2 {
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		try {
+			
 			conn = getConnection();
 			stmt = conn.prepareStatement(DELETE_DU, Statement.RETURN_GENERATED_KEYS);
 			stmt.setInt(1, du.getId());

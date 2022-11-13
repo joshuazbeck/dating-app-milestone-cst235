@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigInteger;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -20,8 +21,8 @@ import javax.validation.constraints.Size;
 public class User implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-
-	boolean loggedIn;
+	
+	boolean loggedIn; 
 	
 	private int id;
 

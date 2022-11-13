@@ -79,5 +79,19 @@ public class ProductController {
 		
 		return "products.xhtml";
 	}
-	
+	public String deleteDatingUser(DatingUser dU) {
+		System.out.println("Deleting datinguser");
+		
+		System.out.println("name: " + dU.getFirstName() + " ID: " + dU.getId());
+		try {
+			service.deleteDatingUser(dU);
+		} catch (RuntimeException | SQLException e) {
+			FacesContext context1 = FacesContext.getCurrentInstance();
+			context1.addMessage( null, new FacesMessage( "There was an issue connecting to the database.  Try again later." ));
+			System.out.println(e.getLocalizedMessage());
+			return "";
+		}
+		
+		return "products.xhtml";
+	}
 }
