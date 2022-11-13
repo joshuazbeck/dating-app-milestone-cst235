@@ -1,19 +1,22 @@
 package data;
 
+import java.sql.SQLException;
 import java.util.List;
+
+import javax.servlet.ServletException;
 
 import beans.DatingUser;
 import beans.User;
 
 public interface DatabaseServiceInterface2 {
 	
-	void addUsers(User u);
-	List<User> getAllUsers();
-	User getUserById(User u);
-	void updateUser(User u);
-	void deleteUser(User u);
-	User getUserByUsername(User u);
+	void addUsers(User u) throws RuntimeException, SQLException;
+	List<User> getAllUsers() throws RuntimeException, SQLException;
+	User getUserById(int id) throws RuntimeException, SQLException;
+	void updateUser(User u) throws RuntimeException, SQLException;
+	void deleteUser(User u) throws RuntimeException, SQLException;
+	User getUserByUsername(User u) throws RuntimeException, SQLException;
 	
-	void addDatingUser(DatingUser du);
-	List<DatingUser> getAllDatingUsers ();
+	void addDatingUser(DatingUser du) throws RuntimeException, SQLException;
+	List<DatingUser> getAllDatingUsers () throws RuntimeException, SQLException;
 }

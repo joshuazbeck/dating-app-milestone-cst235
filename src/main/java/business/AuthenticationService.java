@@ -1,11 +1,15 @@
 package business;
 
+import java.sql.SQLException;
+
 import javax.ejb.Local;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.enterprise.inject.Alternative;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.servlet.ServletException;
 
 import beans.User;
 import data.DatabaseServiceInterface2;
@@ -32,7 +36,7 @@ public class AuthenticationService implements AuthenticationServiceInterface {
 	 * @param password - the password
 	 * @return - a user if one exists matching the user name and password
 	 */
-	 public User validateUser(User u){
+	 public User validateUser(User u) throws RuntimeException, SQLException{
 		 // Check the DB for a user with this user name and password
 		 User user = this.db.getUserByUsername(u);
 		 
@@ -67,8 +71,10 @@ public class AuthenticationService implements AuthenticationServiceInterface {
 	  * Add a user to the database
 	  * @param user - User
 	  */
-	 public void addUser(User user) {
+	 public void addUser(User user) throws RuntimeException, SQLException {
+
 		 this.db.addUsers(user);
+
 	 }
 	  
 

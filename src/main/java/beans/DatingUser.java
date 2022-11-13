@@ -1,11 +1,14 @@
 package beans;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * This is the "product" for the Milestone
@@ -21,22 +24,66 @@ public class DatingUser implements Serializable {
 	
 	int id;
 	
+	public String getFirstName() {
+		if (this.userRef != null) {
+			return this.userRef.getFirstName();
+		} else {
+			return "";
+		}
+	}
+	
+	public String getLastName() {
+		if (this.userRef != null) {
+			return this.userRef.getLastName();
+		} else {
+			return "";
+		}
+	}
+	
+	public String getEmailAddress() {
+		if (this.userRef != null) {
+			return this.userRef.getEmailAddress();
+		} else {
+			return "";
+		}
+	}
+	
+	public BigInteger getPhoneNumber() {
+		if (this.userRef != null) {
+			return this.userRef.getPhoneNumber();
+		} else {
+			return BigInteger.ONE;
+		}
+	}
+	
 	List<String> hobbies;
 	
+	@NotNull()
+	@Size(min=2, max=100) 
 	String education;
 	
-	List<String> languagesSpoken;
+	@NotNull()
+	@Size(min=2, max=100) 
+	String languagesSpoken;
 	
-	//TODO: Calculate compatability score later based on other users
-	float compatibilityScore;
-	
+	@NotNull()
+	@Size(min=2, max=50) 
 	String hairColor;
 	
+	@NotNull()
+	@Size(min=2, max=50) 
 	String eyeColor;
 	
 	int heightInches;
 	
 	User userRef;
+	
+	public List<String> getHobbies() {
+		return hobbies;
+	}
+	public void setHobbies(List<String> hobbies) {
+		this.hobbies = hobbies;
+	}
 	
 	public int getId() {
 		return id;
@@ -44,29 +91,12 @@ public class DatingUser implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public List<String> getHobbies() {
-		return hobbies;
-	}
-	public void setHobbies(List<String> hobbies) {
-		this.hobbies = hobbies;
-	}
+
 	public String getEducation() {
 		return education;
 	}
 	public void setEducation(String education) {
 		this.education = education;
-	}
-	public List<String> getLanguagesSpoken() {
-		return languagesSpoken;
-	}
-	public void setLanguagesSpoken(List<String> languagesSpoken) {
-		this.languagesSpoken = languagesSpoken;
-	}
-	public float getCompatibilityScore() {
-		return compatibilityScore;
-	}
-	public void setCompatibilityScore(float compatibilityScore) {
-		this.compatibilityScore = compatibilityScore;
 	}
 	public String getHairColor() {
 		return hairColor;
@@ -94,17 +124,21 @@ public class DatingUser implements Serializable {
 	}
 	
 	
-	public DatingUser(List<String> hobbies, String education, List<String> languagesSpoken, float compatibilityScore,
+	public DatingUser(String education, String languagesSpoken,
 			String hairColor, String eyeColor, int heightInches, User userRef) {
 		super();
-		this.hobbies = hobbies;
 		this.education = education;
 		this.languagesSpoken = languagesSpoken;
-		this.compatibilityScore = compatibilityScore;
 		this.hairColor = hairColor;
 		this.eyeColor = eyeColor;
 		this.heightInches = heightInches;
 		this.userRef = userRef;
+	}
+	public String getLanguagesSpoken() {
+		return languagesSpoken;
+	}
+	public void setLanguagesSpoken(String languagesSpoken) {
+		this.languagesSpoken = languagesSpoken;
 	}
 	public DatingUser() {
 	}

@@ -1,5 +1,8 @@
 package controllers;
 
+import java.sql.SQLException;
+
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
@@ -42,7 +45,15 @@ public class LoginController {
 		if (user.getUsername() != null && user.getPassword() != null) {
 			
 			//Get the authenticator to handle accessing and setting the session
-			User u = this.authService.validateUser(user);
+			User u;
+			try {
+				u = this.authService.validateUser(user);
+			} catch (RuntimeException | SQLException e) {
+				FacesContext context1 = FacesContext.getCurrentInstance();
+				context1.addMessage( null, new FacesMessage( "There was an issue connecting to the database.  Try again later." ));
+				System.out.println(e.getLocalizedMessage());
+				return "";
+			}
 			
 			if (u != null) {
 				//There was a user for the user name and password so return success

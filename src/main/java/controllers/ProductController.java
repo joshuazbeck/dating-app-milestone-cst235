@@ -1,5 +1,8 @@
 package controllers;
 
+import java.sql.SQLException;
+
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -27,15 +30,25 @@ public class ProductController {
 	public DatabaseServiceInterface2 getService() {
 		return service;
 	}
-	public String add() {
+	public String add()  {
 		FacesContext context = FacesContext.getCurrentInstance();
 		DatingUser datingUser = context.getApplication().evaluateExpressionGet(context, "#{datingUser}", DatingUser.class);
 
 		if (datingUser != null) {
 			//Add a user
-			datingUser.setUserRef(service.getAllUsers().get(0));
+		
 			
-			service.addDatingUser(datingUser);
+			
+			try {
+				datingUser.setUserRef(service.getAllUsers().get(0));
+				service.addDatingUser(datingUser);
+			} catch (RuntimeException | SQLException e) {
+				FacesContext context1 = FacesContext.getCurrentInstance();
+				context1.addMessage( null, new FacesMessage( "There was an issue connecting to the database.  Try again later." ));
+				System.out.println(e.getLocalizedMessage());
+				return "";
+			}
+			
 		} 
 		
 		return "products.xhtml";

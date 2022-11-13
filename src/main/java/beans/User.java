@@ -39,17 +39,21 @@ public class User implements Serializable {
 	@NotNull()
 	BigInteger phoneNumber;
 	
-	@NotNull
+	@NotNull()
+	@Size(min=2) 
 	String address;
 	String address2;
-	@NotNull
+	@NotNull()
+	@Size(min=2) 
 	String city;
-	@NotNull
+	@NotNull()
+	@Size(min=2) 
 	String state;
-	@NotNull
+	@NotNull()
+	@Size(min=2) 
 	String country;
 	
-	@NotNull
+	@NotNull()
 	int zipcode;
 	
 	@NotNull()
@@ -60,7 +64,6 @@ public class User implements Serializable {
 	@Size(min=5) 
 	String password;
 	
-	DatingUser datingUser;
 
 	public boolean isLoggedIn() {
 		return loggedIn;
@@ -165,14 +168,6 @@ public class User implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	public DatingUser getDatingUser() {
-		return datingUser;
-	}
-
-	public void setDatingUser(DatingUser datingUser) {
-		this.datingUser = datingUser;
-	}
 	
 	public int getId() {
 		return id;
@@ -183,7 +178,7 @@ public class User implements Serializable {
 	}
 
 	public User(String firstName, String lastName, String emailAddress, BigInteger phoneNumber, String username,
-			String password, DatingUser datingUser) {
+			String password) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -191,7 +186,6 @@ public class User implements Serializable {
 		this.phoneNumber = phoneNumber;
 		this.username = username;
 		this.password = password;
-		this.datingUser = datingUser;
 		this.loggedIn = false;
 	}
 	public User() {

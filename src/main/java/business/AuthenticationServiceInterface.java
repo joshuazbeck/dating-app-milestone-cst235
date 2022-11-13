@@ -1,7 +1,10 @@
 package business;
 
+import java.sql.SQLException;
+
 import javax.ejb.Local;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletException;
 
 import beans.User;
 
@@ -14,7 +17,7 @@ public interface AuthenticationServiceInterface {
 	 * @param password - the password
 	 * @return - a user if one exists matching the user name and password
 	 */
-	 public User validateUser(User user);
+	 public User validateUser(User user) throws RuntimeException, SQLException;
 	 
 	 /**
 	  * Get the logged in user
@@ -35,7 +38,8 @@ public interface AuthenticationServiceInterface {
 	 /**
 	  * Add a user to the database
 	  * @param user - User
+	 * @throws ServletException 
 	  */
-	 public void addUser(User user);
+	 public void addUser(User user) throws RuntimeException, SQLException;
 	 
 }

@@ -14,7 +14,7 @@
 			<h:form>
 			
 			<h1>Registration</h1>
-			
+			<h:messages />
 			First Name:<br></br>
 						<h:inputText 
 				value="#{user.firstName}"
@@ -99,7 +99,7 @@
 			<h:commandButton action="#{registrationController.register()}" value="Register" class="btn btn-primary"/>
 			
 			</h:form>
-			<h:messages />
+			
 		</ui:define>
 
 	</ui:composition>
