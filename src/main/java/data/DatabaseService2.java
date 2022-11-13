@@ -33,23 +33,22 @@ import business.DatabaseServiceInterface;
 @Alternative
 public class DatabaseService2 implements DatabaseServiceInterface2 {
 	
-	private static final String DB_URL = "jdbc:mysql://localhost:3306/milestonecst235";
+	private static final String DB_URL = "jdbc:mysql://localhost:3307/milestonecst235?autoReconnect=true&useSSL=false";
 	private static final String DB_USER = "root";
-	private static final String PASSWORD = "password";
+	private static final String PASSWORD = "root";
 	
 	//User table queries
 	private static final String INSERT_USER = "INSERT INTO user (firstname, lastname, phone_num, email, address_line1, address_line2, city, state, country, zipcode, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_BY_ID = "SELECT * FROM user WHERE user_id=?";
 	private static final String GET_BY_USER = "SELECT * FROM user WHERE username=?";
 	private static final String GET_ALL = "SELECT * FROM user";
-	private static final String UPDATE = "UPDATE user SET firstname=?, lastname=?, phone_num=?, email=?, username=?, password=? WHERE user_id=?";
+	private static final String UPDATE = "UPDATE user SET firstname=?, lastname=?, phone_num=?, address_line1=?, address_line2, city=?, state=?, country=?, zipcode=?, email=?, username=?, password=? WHERE user_id=?";
 	private static final String DELETE = "DELETE FROM user WHERE user_id=?";
 	
 	//DatingUser table queries
 	private static final String INSERT_DU = "INSERT INTO dating_user (education, spoken_languages, hair_color, eye_color, height_inches, user_id, hobbies) VALUES (?, ?, ?, ?, ?, ?, ?)";
-	private static final String GET_DU_ID = "SELECT * FROM dating_user WHERE dating_user_id=? AND user_id=?";
 	private static final String GET_ALL_DU = "SELECT * FROM dating_user";
-	private static final String UPDATE_DU = "UPDATE dating_user SET ";
+	private static final String UPDATE_DU = "UPDATE dating_user SET education=?, spoken_languages=?, hair_color=?, eye_color=?, height_inches=?, user_id=?, hobbies=? WHERE dating_user_id=?";
 	private static final String DELETE_DU = "DELETE FROM dating_user WHERE dating_user_id=?";
 	
 	//Hobby table queries
@@ -201,11 +200,18 @@ public class DatabaseService2 implements DatabaseServiceInterface2 {
 			stmt.setString(1, user.getFirstName());
 			stmt.setString(2, user.getLastName());
 			stmt.setObject(3, user.getPhoneNumber());
-			stmt.setString(4, user.getEmailAddress());
-			stmt.setString(5, user.getUsername());
-			stmt.setString(6, user.getPassword());
-			stmt.setInt(7, user.getId());
+			stmt.setString(4, user.getAddress());
+			stmt.setString(5, user.getAddress2());
+			stmt.setString(6, user.getState());
+			stmt.setString(7, user.getCountry());
+			stmt.setInt(8, user.getZipcode());
+			stmt.setString(9, user.getEmailAddress());
+			stmt.setString(10, user.getUsername());
+			stmt.setString(11, user.getPassword());
+			stmt.setInt(12, user.getId());
 			
+//			firstname=?, lastname=?, phone_num=?, address_line1=?, address_line2, city=?, state=?, country=?, zipcode=?, email=?, username=?, password=? WHERE user_id=?
+					
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -250,7 +256,7 @@ public class DatabaseService2 implements DatabaseServiceInterface2 {
 			stmt.setInt(5, du.getHeightInches());
 			
 			//MARK: TODO get user from session... hard coding for now
-			int user_id = 1;
+			int user_id = 2;
 			//MARK: Set to currently logged in user
 			stmt.setInt(6, user_id);
 			String hobbyString = "";
@@ -288,7 +294,7 @@ public class DatabaseService2 implements DatabaseServiceInterface2 {
 				
 			    User uR = this.getUserById(rs.getInt("user_id"));
 			    
-			    System.out.println(rs.getInt("user_id"));
+			    //System.out.println(rs.getInt("user_id"));
 			    DatingUser du = new DatingUser();
 			    du.setEducation(rs.getString("education"));
 			    du.setEyeColor(rs.getString("eye_color"));
@@ -297,12 +303,62 @@ public class DatabaseService2 implements DatabaseServiceInterface2 {
 			    du.setUserRef(uR);
 			    du.setHeightInches(rs.getInt("height_inches"));
 			    du.setHobbies(hobbyList);
+			    du.setId(rs.getInt("dating_user_id"));
 			    
 				datingUsers.add(du);
 			}
 			rs.close();
 			return datingUsers;
 			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			close(stmt);
+			close(conn);
+		}
+	}
+	
+	@Override
+	public void updateDatingUser(DatingUser du) throws RuntimeException, SQLException {
+		
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		try {
+			conn = getConnection();
+			stmt = conn.prepareStatement(UPDATE_DU, Statement.RETURN_GENERATED_KEYS);
+			stmt.setString(1, du.getEducation());
+			stmt.setObject(2, du.getLanguagesSpoken());
+			stmt.setString(3, du.getHairColor());
+			stmt.setString(4, du.getEyeColor());
+			stmt.setInt(5, du.getHeightInches());
+			
+			int user_id = 2;
+			stmt.setInt(6, user_id);
+			String hobbyString = "";
+			for (String hobby: du.getHobbies()) {
+				hobbyString += hobby + this.delimator;
+			}
+			System.out.println(hobbyString);
+			stmt.setObject(7, hobbyString);
+			stmt.setInt(8, du.getId()); 
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			close(stmt);
+			close(conn);
+		}
+	}
+	@Override
+	public void deleteDatingUser(DatingUser du) throws RuntimeException, SQLException{
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		try {
+			conn = getConnection();
+			stmt = conn.prepareStatement(DELETE_DU, Statement.RETURN_GENERATED_KEYS);
+			stmt.setInt(1, du.getId());
+			
+			stmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {

@@ -19,4 +19,7 @@ public interface DatabaseServiceInterface2 {
 	
 	void addDatingUser(DatingUser du) throws RuntimeException, SQLException;
 	List<DatingUser> getAllDatingUsers () throws RuntimeException, SQLException;
+	void updateDatingUser(DatingUser du) throws RuntimeException, SQLException;
+	void deleteDatingUser(DatingUser du) throws RuntimeException, SQLException;
+
 }

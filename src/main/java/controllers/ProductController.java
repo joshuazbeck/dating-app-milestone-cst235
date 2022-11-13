@@ -9,6 +9,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 import beans.DatingUser;
+import beans.User;
 import business.AuthenticationServiceInterface;
 import data.DatabaseServiceInterface2;
 
@@ -33,12 +34,9 @@ public class ProductController {
 	public String add()  {
 		FacesContext context = FacesContext.getCurrentInstance();
 		DatingUser datingUser = context.getApplication().evaluateExpressionGet(context, "#{datingUser}", DatingUser.class);
-
+		
 		if (datingUser != null) {
 			//Add a user
-		
-			
-			
 			try {
 				datingUser.setUserRef(service.getAllUsers().get(0));
 				service.addDatingUser(datingUser);
@@ -53,4 +51,33 @@ public class ProductController {
 		
 		return "products.xhtml";
 	}
+	
+	public String showUpdateForm(DatingUser dU) {
+		System.out.println("Datinguser being edited with first name: " + dU.getFirstName() + dU.getId());
+		
+		//put dating user info into the form
+		FacesContext.getCurrentInstance().getExternalContext().getRequestMap().put("datingUser", dU);
+		
+		return "products_update.xhtml";
+	}
+	
+	public String updateDatingUser() {
+		//update our user!
+		FacesContext context = FacesContext.getCurrentInstance();
+		DatingUser dU = context.getApplication().evaluateExpressionGet(context, "#{datingUser}", DatingUser.class);
+		
+		System.out.println("Updated: " + dU.getFirstName());
+		System.out.println("ID: " + dU.getId());
+		try {
+			service.updateDatingUser(dU);
+		} catch (RuntimeException | SQLException e) {
+			FacesContext context1 = FacesContext.getCurrentInstance();
+			context1.addMessage( null, new FacesMessage( "There was an issue connecting to the database.  Try again later." ));
+			System.out.println(e.getLocalizedMessage());
+			return "";
+		}
+		
+		return "products.xhtml";
+	}
+	
 }

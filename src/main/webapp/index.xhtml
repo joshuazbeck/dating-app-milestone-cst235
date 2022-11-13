@@ -8,12 +8,14 @@
 <h:body>
 	<ui:composition template="/layouts/template.xhtml">
 		<ui:define name="content">
+		<h:form>
 		<c:if test="#{user.loggedIn}">
-	        <h1><h:outputText value="Good day #{user.username}!!  Let's find you a partner." /> </h1>
-	            </c:if>
-	           	<c:if test="#{not user.loggedIn}">
-	            	<h:outputText value="Welcome to the dreamland of finding your mate.  We take pride in getting you connected with the right person.  Create an account to start publishing your profile and finding love." /> 
-	            </c:if>
+     		<h1><h:outputText value="Good day #{user.username}!!  Let's find you a partner." /> </h1>
+         </c:if>
+        	<c:if test="#{not user.loggedIn}">
+         	<h:outputText value="Welcome to the dreamland of finding your mate.  We take pride in getting you connected with the right person.  Create an account to start publishing your profile and finding love." /> 
+         </c:if>
+	    </h:form>
 		</ui:define>
 	</ui:composition>
 
