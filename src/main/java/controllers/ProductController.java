@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -19,7 +20,7 @@ import data.DatabaseServiceInterface2;
  *
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class ProductController {
 	
 	@Inject
@@ -28,9 +29,12 @@ public class ProductController {
 	@Inject
 	AuthenticationServiceInterface authService;
 
+	
 	public DatabaseServiceInterface2 getService() {
 		return service;
 	}
+	
+	
 	public String add()  {
 		FacesContext context = FacesContext.getCurrentInstance();
 		DatingUser datingUser = context.getApplication().evaluateExpressionGet(context, "#{datingUser}", DatingUser.class);

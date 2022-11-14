@@ -171,3 +171,12 @@ padding-bottom:3rem;
 text,h1,h2,h3,h4,h5 {
 color:#294C60!important;
 }
+
+.products-form {
+    margin: 0 !important;
+    background-color: #FFEFD3;
+}
+
+form {
+    padding:  6rem 4rem;
+}

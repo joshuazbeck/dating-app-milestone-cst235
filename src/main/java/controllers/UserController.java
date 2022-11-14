@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -14,13 +15,31 @@ import business.AuthenticationServiceInterface;
 import data.DatabaseServiceInterface2;
 
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class UserController {
 	@Inject
 	AuthenticationServiceInterface authService;
 	@Inject
-	DatabaseServiceInterface2 service;
+	public DatabaseServiceInterface2 service;
 	
+	public DatabaseServiceInterface2 getService() {
+		return this.service;
+	}
+	
+	private User user = null;
+	public User getUser() {
+		if (this.user == null) {
+			try {
+				this.user = this.service.getAllUsers().get(0);
+			} catch (RuntimeException | SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return this.user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
 	public String showUpdateForm(User u) {
 		
 		//put dating user info into the form
