@@ -33,26 +33,50 @@ import business.DatabaseServiceInterface;
 @Alternative
 public class DatabaseService2 implements DatabaseServiceInterface2 {
 
-	private static final String DB_URL = "jdbc:mysql://localhost:3306/milestonecst235?autoReconnect=true&useSSL=false";
+	private static final String DB_URL = "jdbc:mysql://localhost:3307/milestonecst235?autoReconnect=true&useSSL=false";
 	private static final String DB_USER = "root";
-	private static final String PASSWORD = "password";
+	private static final String PASSWORD = "root";
 
 	// User table queries
 	private static final String INSERT_USER = "INSERT INTO user (firstname, lastname, phone_num, email, address_line1, address_line2, city, state, country, zipcode, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_BY_ID = "SELECT * FROM user WHERE user_id=?";
 	private static final String GET_BY_USER = "SELECT * FROM user WHERE username=?";
+	private static final String GET_USER_F_N = "SELECT * FROM user WHERE firstname=? or lastname=?";
 	private static final String GET_ALL = "SELECT * FROM user";
 	private static final String UPDATE = "UPDATE user SET firstname=?, lastname=?, phone_num=?, address_line1=?, address_line2=?, city=?, state=?, country=?, zipcode=?, email=?, username=?, password=? WHERE user_id=?";
 	private static final String DELETE = "DELETE FROM user WHERE user_id=?";
 
 	// DatingUser table queries
+	private static final String GET_DU = "SELECT * FROM dating_user WHERE education=? OR hair_color=? OR eye_color=? OR height_inches=?";
 	private static final String INSERT_DU = "INSERT INTO dating_user (education, spoken_languages, hair_color, eye_color, height_inches, user_id, hobbies) VALUES (?, ?, ?, ?, ?, ?, ?)";
 	private static final String GET_ALL_DU = "SELECT * FROM dating_user";
 	private static final String UPDATE_DU = "UPDATE dating_user SET education=?, spoken_languages=?, hair_color=?, eye_color=?, height_inches=?, hobbies=? WHERE dating_user_id=?";
 	private static final String DELETE_DU = "DELETE FROM dating_user WHERE dating_user_id=?";
 
 	private String delimator = "@";
-
+	
+	public User findUserByFirstOrLast(User u) throws RuntimeException, SQLException {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		try {
+			conn = getConnection();
+			stmt = conn.prepareStatement(GET_USER_F_N);
+			stmt.setString(1, u.getFirstName());
+			stmt.setString(2, u.getLastName());
+			ResultSet rs = stmt.executeQuery();
+			
+			if (rs.next()) {
+				User found = new User();
+				found.setFirstName(rs.getString("firstname"));
+				
+				return found;
+			} else {
+				return null;
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 	/**
 	 * Add a user to the database
 	 * 
@@ -282,7 +306,35 @@ public class DatabaseService2 implements DatabaseServiceInterface2 {
 		stmt.executeUpdate();
 
 	}
-
+	@Override
+	public DatingUser getDatingUser(DatingUser du) throws RuntimeException, SQLException {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		try {
+			conn = getConnection();
+			stmt = conn.prepareStatement(GET_DU);
+			stmt.setString(1, du.getEducation());
+			stmt.setString(2, du.getHairColor());
+			stmt.setString(3, du.getEyeColor());
+			stmt.setInt(4, du.getHeightInches());
+			ResultSet rs = stmt.executeQuery();
+			//"SELECT * FROM dating_user WHERE education=? OR hair_color=? OR eye_color=? OR height_inches=?"
+			if (rs.next()) {
+				DatingUser found = new DatingUser();
+				found.setEducation(rs.getString("education"));
+				found.setHairColor(rs.getString("hair_color"));;
+				found.setEyeColor(rs.getString("eye_color"));
+				found.setHeightInches(rs.getInt("height_inches"));
+				
+				return found;
+			} else {
+				return null;
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+	}
 	@Override
 	public List<DatingUser> getAllDatingUsers() throws RuntimeException, SQLException {
 		Connection conn = null;
