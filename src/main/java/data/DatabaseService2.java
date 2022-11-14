@@ -33,9 +33,9 @@ import business.DatabaseServiceInterface;
 @Alternative
 public class DatabaseService2 implements DatabaseServiceInterface2 {
 	
-	private static final String DB_URL = "jdbc:mysql://localhost:3307/milestonecst235?autoReconnect=true&useSSL=false";
+	private static final String DB_URL = "jdbc:mysql://localhost:3306/milestonecst235?autoReconnect=true&useSSL=false";
 	private static final String DB_USER = "root";
-	private static final String PASSWORD = "root";
+	private static final String PASSWORD = "password";
 	
 	//User table queries
 	private static final String INSERT_USER = "INSERT INTO user (firstname, lastname, phone_num, email, address_line1, address_line2, city, state, country, zipcode, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -157,7 +157,7 @@ public class DatabaseService2 implements DatabaseServiceInterface2 {
 	public User getUserByUsername(User user) throws RuntimeException, SQLException{
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		try {
+
 			conn = getConnection();
 			stmt = conn.prepareStatement(GET_BY_USER, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, user.getUsername());
@@ -168,16 +168,17 @@ public class DatabaseService2 implements DatabaseServiceInterface2 {
 				User found = new User();
 				found.setUsername(rs.getString("username"));
 				
+				close(stmt);
+				close(conn);
 				return found;
 			} else {
+				close(stmt);
+				close(conn);
 				return null;
 			}
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		} finally {
-			close(stmt);
-			close(conn);
-		}
+		
+			
+		
 	}
 	/**
 	 * update a user in the database
@@ -187,7 +188,7 @@ public class DatabaseService2 implements DatabaseServiceInterface2 {
 	public void updateUser(User user) throws RuntimeException, SQLException{
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		try {
+
 			conn = getConnection();
 			stmt = conn.prepareStatement(UPDATE, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, user.getFirstName());
@@ -204,12 +205,9 @@ public class DatabaseService2 implements DatabaseServiceInterface2 {
 			stmt.setInt(12, user.getId());
 								
 			stmt.executeUpdate();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		} finally {
 			close(stmt);
 			close(conn);
-		}
+		
 	}
 	/**
 	 * delete a user from the database
@@ -219,18 +217,16 @@ public class DatabaseService2 implements DatabaseServiceInterface2 {
 	public void deleteUser(User user) throws RuntimeException, SQLException{
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		try {
+
 			conn = getConnection();
 			stmt = conn.prepareStatement(DELETE, Statement.RETURN_GENERATED_KEYS);
 			stmt.setInt(1, user.getId());
 			
 			stmt.executeUpdate();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		} finally {
+
 			close(stmt);
 			close(conn);
-		}
+		
 	}
 	
 	@Override
@@ -265,7 +261,7 @@ public class DatabaseService2 implements DatabaseServiceInterface2 {
 	public List<DatingUser> getAllDatingUsers() throws RuntimeException, SQLException{
 		Connection conn = null;
 		Statement stmt = null;
-		try {
+		
 			conn = getConnection();
 			stmt = conn.createStatement();
 			
@@ -299,14 +295,13 @@ public class DatabaseService2 implements DatabaseServiceInterface2 {
 				datingUsers.add(du);
 			}
 			rs.close();
-			return datingUsers;
-			
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		} finally {
 			close(stmt);
 			close(conn);
-		}
+			return datingUsers;
+			
+
+			
+		
 	}
 	
 	@Override
@@ -314,7 +309,7 @@ public class DatabaseService2 implements DatabaseServiceInterface2 {
 		
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		try {
+
 			conn = getConnection();
 			stmt = conn.prepareStatement(UPDATE_DU, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, du.getEducation());
@@ -333,30 +328,25 @@ public class DatabaseService2 implements DatabaseServiceInterface2 {
 			stmt.setObject(7, hobbyString);
 			stmt.setInt(8, du.getId()); 
 			stmt.executeUpdate();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		} finally {
+	
 			close(stmt);
 			close(conn);
-		}
+		
 	}
 	@Override
 	public void deleteDatingUser(DatingUser du) throws RuntimeException, SQLException{
 		Connection conn = null;
 		PreparedStatement stmt = null;
-		try {
 			
 			conn = getConnection();
 			stmt = conn.prepareStatement(DELETE_DU, Statement.RETURN_GENERATED_KEYS);
 			stmt.setInt(1, du.getId());
 			
 			stmt.executeUpdate();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		} finally {
+		
 			close(stmt);
 			close(conn);
-		}
+		
 	}
 	
 	private Connection getConnection() {

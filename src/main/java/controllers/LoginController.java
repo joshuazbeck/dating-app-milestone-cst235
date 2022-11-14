@@ -57,17 +57,17 @@ public class LoginController {
 			
 			if (u != null) {
 				//There was a user for the user name and password so return success
-				loggedIn = true;
+				this.loggedIn = true;
 				
 				return "products.xhtml";
 			} else {
 				//Fail login as no users matched
-				loggedIn = false;
+				this.loggedIn = false;
 				return "login_fail.xhtml";
 			}
 		} else {
 			//Fail login
-			loggedIn = false;
+			this.loggedIn = false;
 			return "login_fail.xhtml";
 		}
 

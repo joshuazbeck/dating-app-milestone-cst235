@@ -13,6 +13,7 @@
 	            <li><a href="index.xhtml">Home</a></li>
 	            <c:if test="#{loginController.loggedIn}">
 	            	<li><a href="#{loginController.logout()}">Logout</a></li>
+	            	<li><a href="user_update.xhtml">Edit User</a></li>
 	            </c:if>
 	           	<c:if test="#{not userInstance.loggedIn}">
 	           		<li><a href="registration_form.xhtml">Register</a></li>
