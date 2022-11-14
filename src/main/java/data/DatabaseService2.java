@@ -50,14 +50,7 @@ public class DatabaseService2 implements DatabaseServiceInterface2 {
 	private static final String GET_ALL_DU = "SELECT * FROM dating_user";
 	private static final String UPDATE_DU = "UPDATE dating_user SET education=?, spoken_languages=?, hair_color=?, eye_color=?, height_inches=?, user_id=?, hobbies=? WHERE dating_user_id=?";
 	private static final String DELETE_DU = "DELETE FROM dating_user WHERE dating_user_id=?";
-	
-	//Hobby table queries
-	private static final String INSERT_HOBBY = "";
-	private static final String GET_HOBBY_ID = "";
-	private static final String GET_ALL_HOBBIES = "";
-	private static final String UPDATE_HOBBY = "";
-	private static final String DELETE_HOBBY = "";
-	
+		
 	private String delimator = "@";
 	/**
 	 * Add a user to the database
@@ -209,9 +202,7 @@ public class DatabaseService2 implements DatabaseServiceInterface2 {
 			stmt.setString(10, user.getUsername());
 			stmt.setString(11, user.getPassword());
 			stmt.setInt(12, user.getId());
-			
-//			firstname=?, lastname=?, phone_num=?, address_line1=?, address_line2, city=?, state=?, country=?, zipcode=?, email=?, username=?, password=? WHERE user_id=?
-					
+								
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
