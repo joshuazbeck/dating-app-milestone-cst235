@@ -197,4 +197,9 @@ public class User implements Serializable {
 		this.id = id;
 	}
 
+	public User(String firstName, String lastName) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
+
 }

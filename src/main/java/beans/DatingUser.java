@@ -146,6 +146,13 @@ public class DatingUser implements Serializable {
 		this.education = education;
 	}
 
+	public DatingUser(String education, String hairColor, String eyeColor, int heightInches) {
+		this.education = education;
+		this.hairColor = hairColor;
+		this.eyeColor = eyeColor;
+		this.heightInches = heightInches;
+	}
+
 
 	
 }
