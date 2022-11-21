@@ -1,5 +1,7 @@
 package business;
 
+import java.sql.SQLException;
+
 import javax.ejb.EJB;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -43,6 +45,23 @@ public class RestService {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+	
+	@GET
+	@Path("/deleteuser/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String deleteUser(@PathParam("id") int id) {
+		try {
+			User u = new User();
+			u.setId(id);
+			service.deleteUser(u);
+			return "Successfully deleted user id: " + id;
+		} catch (RuntimeException e) {
+			System.out.println("There was a runtime exception " + e.getLocalizedMessage());
+		} catch (SQLException e) {
+			System.out.println("There was a SQL exception " + e.getLocalizedMessage());
+		}
+		return "Failed deleting the user id: " + id;
 	}
 
 }

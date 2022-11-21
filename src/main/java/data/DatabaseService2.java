@@ -33,9 +33,9 @@ import business.DatabaseServiceInterface;
 @Alternative
 public class DatabaseService2 implements DatabaseServiceInterface2 {
 
-	private static final String DB_URL = "jdbc:mysql://localhost:3307/milestonecst235?autoReconnect=true&useSSL=false";
+	private static final String DB_URL = "jdbc:mysql://localhost:3306/milestonecst235?autoReconnect=true&useSSL=false";
 	private static final String DB_USER = "root";
-	private static final String PASSWORD = "root";
+	private static final String PASSWORD = "password";
 
 	// User table queries
 	private static final String INSERT_USER = "INSERT INTO user (firstname, lastname, phone_num, email, address_line1, address_line2, city, state, country, zipcode, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -67,7 +67,21 @@ public class DatabaseService2 implements DatabaseServiceInterface2 {
 			
 			if (rs.next()) {
 				User found = new User();
+				
 				found.setFirstName(rs.getString("firstname"));
+				found.setLastName(rs.getString("lastname"));
+				found.setPhoneNumber(BigInteger.valueOf(rs.getInt("phone_num")));
+				found.setAddress(rs.getString("address_line1"));
+				found.setAddress2(rs.getString("address_line2"));
+				found.setCity(rs.getString("city"));
+				found.setState(rs.getString("city"));
+				found.setCountry(rs.getString("country"));
+				found.setZipcode(rs.getInt("zipcode"));
+				found.setEmailAddress(rs.getString("email"));
+				found.setUsername(rs.getString("username"));
+				found.setPassword(rs.getString("password"));
+				found.setId(rs.getInt("user_id"));
+
 				
 				return found;
 			} else {
@@ -321,10 +335,25 @@ public class DatabaseService2 implements DatabaseServiceInterface2 {
 			//"SELECT * FROM dating_user WHERE education=? OR hair_color=? OR eye_color=? OR height_inches=?"
 			if (rs.next()) {
 				DatingUser found = new DatingUser();
+				
+				String hobbyString = rs.getString("hobbies");
+				// serialize
+
+				List<String> hobbyList = new ArrayList<String>();
+				for (String hobby : hobbyString.split(this.delimator)) {
+					hobbyList.add(hobby);
+				}
+				
+				User uR = this.getUserById(rs.getInt("user_id"));
+				
 				found.setEducation(rs.getString("education"));
-				found.setHairColor(rs.getString("hair_color"));;
 				found.setEyeColor(rs.getString("eye_color"));
+				found.setHairColor(rs.getString("hair_color"));
+				found.setLanguagesSpoken(rs.getString("spoken_languages"));
+				found.setUserRef(uR);
 				found.setHeightInches(rs.getInt("height_inches"));
+				found.setHobbies(hobbyList);
+				found.setId(rs.getInt("dating_user_id"));
 				
 				return found;
 			} else {
