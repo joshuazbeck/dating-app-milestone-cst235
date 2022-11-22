@@ -152,7 +152,5 @@ public class DatingUser implements Serializable {
 		this.eyeColor = eyeColor;
 		this.heightInches = heightInches;
 	}
-
-
 	
 }

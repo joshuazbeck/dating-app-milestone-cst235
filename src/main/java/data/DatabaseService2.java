@@ -1,7 +1,5 @@
 package data;
 
-import java.io.ByteArrayInputStream;
-import java.io.ObjectInputStream;
 import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,11 +15,8 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.enterprise.inject.Alternative;
 
-import org.jboss.resteasy.util.Hex;
-
 import beans.DatingUser;
 import beans.User;
-import business.DatabaseServiceInterface;
 
 /**
  * @author Tanner Ray
@@ -33,9 +28,9 @@ import business.DatabaseServiceInterface;
 @Alternative
 public class DatabaseService2 implements DatabaseServiceInterface2 {
 
-	private static final String DB_URL = "jdbc:mysql://localhost:3306/milestonecst235?autoReconnect=true&useSSL=false";
+	private static final String DB_URL = "jdbc:mysql://localhost:3307/milestonecst235?autoReconnect=true&useSSL=false";
 	private static final String DB_USER = "root";
-	private static final String PASSWORD = "password";
+	private static final String PASSWORD = "root";
 
 	// User table queries
 	private static final String INSERT_USER = "INSERT INTO user (firstname, lastname, phone_num, email, address_line1, address_line2, city, state, country, zipcode, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
