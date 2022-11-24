@@ -2,10 +2,13 @@ package beans;
 
 import java.io.Serializable;
 import java.math.BigInteger;
+import java.security.Principal;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -201,5 +204,17 @@ public class User implements Serializable {
 		this.firstName = firstName;
 		this.lastName = lastName;
 	}
-
+	
+	@PostConstruct
+	public void init() {
+		Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
+		if (principal == null) {
+			setFirstName("Unknown");
+			setLastName("");
+		} else {
+			setFirstName(principal.getName());
+			setLastName("");
+			System.out.println(principal.getName());
+		}
+	}
 }
