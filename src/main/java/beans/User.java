@@ -209,11 +209,11 @@ public class User implements Serializable {
 	public void init() {
 		Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
 		if (principal == null) {
-			setFirstName("Unknown");
-			setLastName("");
+			setUsername("Unknown");
+			setPassword("");
 		} else {
-			setFirstName(principal.getName());
-			setLastName("");
+			setUsername(principal.getName());
+			setPassword("");
 			System.out.println(principal.getName());
 		}
 	}

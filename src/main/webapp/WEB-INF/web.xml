@@ -78,14 +78,15 @@ javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL </param-name>
     	<url-pattern>/OrdersSoapService/*</url-pattern>
     	<url-pattern>/javax.faces.resource/*</url-pattern>
     	<url-pattern>/registration_form.xhtml</url-pattern>
+    	<url-pattern>/log_in_form.xhtml</url-pattern>
    		</web-resource-collection>
     </security-constraint>
     <login-config>
     	<auth-method>FORM</auth-method>
     	<realm-name>ApplicationRealm</realm-name>
     	<form-login-config>
-    		<form-login-page>/faces/login_form.xhtml</form-login-page>
-    		<form-error-page>/faces/login_fail.xhtml</form-error-page>
+    		<form-login-page>/login_form.xhtml</form-login-page>
+    		<form-error-page>/login_fail.xhtml</form-error-page>
     	</form-login-config>
     </login-config>
     <security-role>

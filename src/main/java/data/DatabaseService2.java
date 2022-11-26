@@ -28,9 +28,9 @@ import beans.User;
 @Alternative
 public class DatabaseService2 implements DatabaseServiceInterface2 {
 
-	private static final String DB_URL = "jdbc:mysql://localhost:3307/milestonecst235?autoReconnect=true&useSSL=false";
+	private static final String DB_URL = "jdbc:mysql://localhost:3306/milestonecst235?autoReconnect=true&useSSL=false";
 	private static final String DB_USER = "root";
-	private static final String PASSWORD = "root";
+	private static final String PASSWORD = "password";
 
 	// User table queries
 	private static final String INSERT_USER = "INSERT INTO user (firstname, lastname, phone_num, email, address_line1, address_line2, city, state, country, zipcode, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -38,8 +38,8 @@ public class DatabaseService2 implements DatabaseServiceInterface2 {
 	private static final String GET_BY_USER = "SELECT * FROM user WHERE username=?";
 	private static final String GET_USER_F_N = "SELECT * FROM user WHERE firstname=? or lastname=?";
 	private static final String GET_ALL = "SELECT * FROM user";
-	private static final String UPDATE = "UPDATE user SET firstname=?, lastname=?, phone_num=?, address_line1=?, address_line2=?, city=?, state=?, country=?, zipcode=?, email=?, username=?, password=? WHERE user_id=?";
-	private static final String DELETE = "DELETE FROM user WHERE user_id=?";
+	private static final String UPDATE = "UPDATE user SET firstname=?, lastname=?, phone_num=?, address_line1=?, address_line2=?, city=?, state=?, country=?, zipcode=?, email=?, username=?, password=? WHERE username=?";
+	private static final String DELETE = "DELETE FROM user WHERE username=?";
 
 	// DatingUser table queries
 	private static final String GET_DU = "SELECT * FROM dating_user WHERE education=? OR hair_color=? OR eye_color=? OR height_inches=?";
@@ -220,7 +220,20 @@ public class DatabaseService2 implements DatabaseServiceInterface2 {
 
 		if (rs.next()) {
 			User found = new User();
+			found.setFirstName(rs.getString("firstname"));
+			found.setLastName(rs.getString("lastname"));
+			found.setPhoneNumber(BigInteger.valueOf(rs.getInt("phone_num")));
+			found.setAddress(rs.getString("address_line1"));
+			found.setAddress2(rs.getString("address_line2"));
+			found.setCity(rs.getString("city"));
+			found.setState(rs.getString("city"));
+			found.setCountry(rs.getString("country"));
+			found.setZipcode(rs.getInt("zipcode"));
+			found.setEmailAddress(rs.getString("email"));
 			found.setUsername(rs.getString("username"));
+			found.setPassword(rs.getString("password"));
+			found.setId(rs.getInt("user_id"));
+
 
 			close(stmt);
 			close(conn);
@@ -258,7 +271,7 @@ public class DatabaseService2 implements DatabaseServiceInterface2 {
 		stmt.setString(10, user.getEmailAddress());
 		stmt.setString(11, user.getUsername());
 		stmt.setString(12, user.getPassword());
-		stmt.setInt(13, user.getId());
+		stmt.setString(13, user.getUsername());
 
 		stmt.executeUpdate();
 		close(stmt);
@@ -278,7 +291,7 @@ public class DatabaseService2 implements DatabaseServiceInterface2 {
 
 		conn = getConnection();
 		stmt = conn.prepareStatement(DELETE, Statement.RETURN_GENERATED_KEYS);
-		stmt.setInt(1, user.getId());
+		stmt.setString(1, user.getUsername());
 
 		stmt.executeUpdate();
 

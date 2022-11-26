@@ -12,100 +12,95 @@
 <h:body>
 	<ui:composition template="/layouts/template.xhtml">
 		<ui:define name="content">
-			<h:form>
-			
+		
 			<c:if test="#{userController.user != null}">
-				<h:inputHidden value="#{userController.user.id}"></h:inputHidden>
-				<h1>Update your user information</h1>
-				<h:messages />
-				First Name:<br></br>
-							<h:inputText 
-					value="#{userController.user.firstName}"
-					requiredMessage="Please enter your first name"
-					validatorMessage="Invalid constraints for the first name.  Must be between 5-15 characters long.">
-				</h:inputText> <br></br>
-				
-				Last Name:<br></br>
-				<h:inputText 
-					value="#{userController.user.lastName}"
-					requiredMessage="Please enter your last name"
-					validatorMessage="Invalid constraints for the last name.  Must be between 5-15 characters long.">
-				</h:inputText> <br></br>
-				
-				Email:<br></br>
-				<h:inputText 
-					value="#{userController.user.emailAddress}"
-					requiredMessage="Please enter your email address."
-					validatorMessage="Invalid email format">
-				</h:inputText><br></br>
-				
-				Phone Number:<br></br>
-				<h:inputText 
-					value="#{userController.user.phoneNumber}" 
-					converterMessage="Please enter digits only for your phone number."
-					requiredMessage="Please enter your phone number"
-					validatorMessage="Invalid phone number format">
-				</h:inputText><br></br>
-				Address:<br></br>
-				<h:inputText 
-					value="#{userController.user.address}" 
-					converterMessage="Please enter your street address."
-					requiredMessage="Please enter your street address."
-					validatorMessage="Invalid address.">
-				</h:inputText><br></br>
-				Address Line 2 (Optional):<br></br>
-				<h:inputText 
-					value="#{userController.user.address2}">
-				</h:inputText><br></br>
-				City:<br></br>
-				<h:inputText 
-					value="#{userController.user.city}" 
-					converterMessage="Please enter the name of your city."
-					requiredMessage="Please check the name of your city."
-					validatorMessage="Invalid city.">
-				</h:inputText><br></br>
-				State:<br></br>
-				<h:inputText 
-					value="#{userController.user.state}" 
-					converterMessage="Please enter the name of your State."
-					requiredMessage="Please check the name of your state."
-					validatorMessage="Invalid phone number format">
-				</h:inputText><br></br>
-				Country:<br></br>
-				<h:inputText 
-					value="#{userController.user.country}" 
-					converterMessage="Please enter the name of your country."
-					requiredMessage="Please check the name of your country"
-					validatorMessage="Invalid country">
-				</h:inputText><br></br>
-				Zip Code:<br></br>
-				<h:inputText 
-					value="#{userController.user.zipcode}" 
-					converterMessage="Please enter digits only for your zipcode"
-					requiredMessage="Please enter your Zip code"
-					validatorMessage="Invalid Zipcode">
-				</h:inputText><br></br>
-				Username:<br></br>
-				<h:inputText 
-					value="#{userController.user.username}"
-					requiredMessage="Please enter a username"
-					validatorMessage="Invalid username format.  Must be at least 5 characters long">
-				</h:inputText><br></br>
-				
-				Password:<br></br>
-				<h:inputSecret 
-					value="#{userController.user.password}"
-					requiredMessage="Please enter a password"
-					validatorMessage="Invalid password format.  Must be at least 5 characters long"> 
-				</h:inputSecret> <br></br>
-				
-				<h:commandButton action="#{userController.updateUser()}" value="Update" class="btn btn-primary"/>
-				<h:commandButton action="#{userController.deleteUser()}" value="Delete" class="btn btn-primary" immediate="true"/>
-				</c:if>
-	           	<c:if test="#{userController.user == null}">
-	           		<h1>No user logged in</h1>
-	           	</c:if>
-			</h:form>
+				<h:form>
+				<c:if test="#{userController.loggedIn()}">
+					<h:inputHidden value="#{userController.user.id}"></h:inputHidden>
+					<h1>Update your user information</h1>
+					<h:messages class="error_message"/>
+					First Name:<br></br>
+								<h:inputText 
+						value="#{userController.user.firstName}"
+						requiredMessage="Please enter your first name"
+						validatorMessage="Invalid constraints for the first name.  Must be between 5-15 characters long.">
+					</h:inputText> <br></br>
+					
+					Last Name:<br></br>
+					<h:inputText 
+						value="#{userController.user.lastName}"
+						requiredMessage="Please enter your last name"
+						validatorMessage="Invalid constraints for the last name.  Must be between 5-15 characters long.">
+					</h:inputText> <br></br>
+					
+					Email:<br></br>
+					<h:inputText 
+						value="#{userController.user.emailAddress}"
+						requiredMessage="Please enter your email address."
+						validatorMessage="Invalid email format">
+					</h:inputText><br></br>
+					
+					Phone Number:<br></br>
+					<h:inputText 
+						value="#{userController.user.phoneNumber}" 
+						converterMessage="Please enter digits only for your phone number."
+						requiredMessage="Please enter your phone number"
+						validatorMessage="Invalid phone number format">
+					</h:inputText><br></br>
+					Address:<br></br>
+					<h:inputText 
+						value="#{userController.user.address}" 
+						converterMessage="Please enter your street address."
+						requiredMessage="Please enter your street address."
+						validatorMessage="Invalid address.">
+					</h:inputText><br></br>
+					Address Line 2 (Optional):<br></br>
+					<h:inputText 
+						value="#{userController.user.address2}">
+					</h:inputText><br></br>
+					City:<br></br>
+					<h:inputText 
+						value="#{userController.user.city}" 
+						converterMessage="Please enter the name of your city."
+						requiredMessage="Please check the name of your city."
+						validatorMessage="Invalid city.">
+					</h:inputText><br></br>
+					State:<br></br>
+					<h:inputText 
+						value="#{userController.user.state}" 
+						converterMessage="Please enter the name of your State."
+						requiredMessage="Please check the name of your state."
+						validatorMessage="Invalid phone number format">
+					</h:inputText><br></br>
+					Country:<br></br>
+					<h:inputText 
+						value="#{userController.user.country}" 
+						converterMessage="Please enter the name of your country."
+						requiredMessage="Please check the name of your country"
+						validatorMessage="Invalid country">
+					</h:inputText><br></br>
+					Zip Code:<br></br>
+					<h:inputText 
+						value="#{userController.user.zipcode}" 
+						converterMessage="Please enter digits only for your zipcode"
+						requiredMessage="Please enter your Zip code"
+						validatorMessage="Invalid Zipcode">
+					</h:inputText><br></br>
+					Username is: <h:outputLabel value="#{userController.user.username}"></h:outputLabel><br></br>
+					
+					Can't edit password<br></br>
+					
+					<h:commandButton action="#{userController.updateUser()}" value="Update" class="btn btn-primary"/>
+					<h:commandButton action="#{userController.deleteUser()}" value="Delete" class="btn btn-primary" immediate="true"/>
+					</c:if>
+		           	<c:if test="#{userController.loggedIn() == false}">
+		           		<h1>No user logged in</h1>
+		           	</c:if>
+				</h:form>
+			</c:if>
+			<c:if test="#{userController.user != null}">
+				<h1>No user linked to the logged in user</h1>
+			</c:if>
 			
 		</ui:define>
 

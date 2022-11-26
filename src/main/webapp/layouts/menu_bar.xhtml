@@ -11,11 +11,16 @@
     	<nav>
 	        <ul>
 	            <li><a href="index.xhtml">Home</a></li>
-	            <c:if test="#{loginController.loggedIn}">
-	            	<li><a href="#{loginController.logout()}">Logout</a></li>
-	            	<li><a href="user_update.xhtml">Edit User</a></li>
+	            <c:if test="#{userController.loggedIn()}">
+	            	
+	            	<c:if test="#{userController.userSet()}">
+	            		<li><a href="user_update.xhtml">Edit User</a></li>
+	            	</c:if>
+	            	<c:if test="#{not userController.userSet()}">
+	            		<li><a href="registration_form.xhtml">Link Profile</a></li>
+	            	</c:if>
 	            </c:if>
-	           	<c:if test="#{not userInstance.loggedIn}">
+	           	<c:if test="#{not userController.loggedIn()}">
 	           		<li><a href="registration_form.xhtml">Register</a></li>
 	            	<li><a href="login_form.xhtml">Login</a></li>
 	            </c:if>

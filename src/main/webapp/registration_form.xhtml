@@ -4,7 +4,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:f="http://xmlns.jcp.org/jsf/core"
     xmlns:h="http://xmlns.jcp.org/jsf/html"
-    xmlns:p="http://primefaces.org/ui">
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:c="http://java.sun.com/jstl/core">
 <h:head>
     <title>Registration Form</title>
 </h:head>
@@ -14,12 +15,13 @@
 			<h:form>
 			
 			<h1>Registration</h1>
-			<h:messages />
+			<h:messages class="error_message"/>
 			First Name:<br></br>
-						<h:inputText 
+				<h:inputText 
 				value="#{user.firstName}"
 				requiredMessage="Please enter your first name"
-				validatorMessage="Invalid constraints for the first name.  Must be between 5-15 characters long.">
+				validatorMessage="Invalid constraints for the first name.  Must be between 5-15 characters long."
+				required="true">
 			</h:inputText> <br></br>
 			
 			Last Name:<br></br>
@@ -82,19 +84,16 @@
 				requiredMessage="Please enter your Zip code"
 				validatorMessage="Invalid Zipcode">
 			</h:inputText><br></br>
-			Username:<br></br>
-			<h:inputText 
-				value="#{user.username}"
-				requiredMessage="Please enter a username"
-				validatorMessage="Invalid username format.  Must be at least 5 characters long">
-			</h:inputText><br></br>
 			
-			Password:<br></br>
-			<h:inputSecret 
-				value="#{user.password}"
-				requiredMessage="Please enter a password"
-				validatorMessage="Invalid password format.  Must be at least 5 characters long"> 
-			</h:inputSecret> <br></br>
+			<c:if test="#{userController.loggedIn() == true}">
+			<small>Username of the current user will be connected to the profile</small><br></br>
+			</c:if>
+			
+			<c:if test="#{userController.loggedIn() == false}">
+			<small>No user logged in so the created user account will not be connected to any username</small><br></br>
+			<small>Log in to link this information to an account.  Check your email for your provided username and password</small><br></br>
+			</c:if>
+			
 			
 			<h:commandButton action="#{registrationController.register()}" value="Register" class="btn btn-primary"/>
 			

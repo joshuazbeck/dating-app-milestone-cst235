@@ -180,3 +180,22 @@ color:#294C60!important;
 form {
     padding:  6rem 4rem;
 }
+
+ul.error_message > li{
+    list-style: none;
+    font-size: 1rem !important;
+    color: #C14953;
+    font-style: italic;
+    font-weight: 200;
+    margin-left: 0;
+    margin-right: 3rem;
+}
+
+ul.error_message > li:before {
+    content: '***';
+    font-weight: 500;
+}
+ul.error_message > li:after {
+    content: '***';
+    font-weight: 500;
+}

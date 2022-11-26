@@ -15,7 +15,7 @@
 		<p>Update your profile!</p>
 			<h:form>
 			<h2>Your Profile</h2>
-			<h:messages />
+			<h:messages class="error_message" />
 			<h:inputHidden value="#{datingUser.id}"></h:inputHidden>
 				<p>Hobbies</p>
 				<h:selectManyCheckbox value="#{datingUser.hobbies}">

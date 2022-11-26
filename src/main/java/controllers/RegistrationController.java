@@ -40,7 +40,7 @@ public class RegistrationController {
 				this.authService.addUser(user);
 			} catch (RuntimeException | SQLException e) {
 				FacesContext context1 = FacesContext.getCurrentInstance();
-				context1.addMessage( null, new FacesMessage( "There was an issue connecting to the database.  Try again later." ));
+				context1.addMessage(null, new FacesMessage( "There was an issue connecting to the database.  Try again later." ));
 				System.out.println(e.getLocalizedMessage());
 				return "";
 			}
