@@ -1,3 +1,4 @@
+
 input {
 background-color:#FFF8EB;
 border:1px solid #294C60;
@@ -38,7 +39,7 @@ background-color:#FFC49B;
 
 nav ul li {
 border-right:solid 2px #FFEFD3;
-width:300px;
+width:250px;
 display:block;
 height:6vh;
 line-height:6vh;
@@ -57,24 +58,30 @@ color:#ffb703;
 position:relative;
 }
 
-nav ul li a::after {
-left:0;
-bottom:10px;
-width:0;
-background-color:#fb8500;
-height:2px;
-content:"";
-display:block;
-position:absolute;
-transition:300ms all;
-}
 
-nav ul li a:hover::after {
-width:100%;
-}
 
-nav ul li a:hover {
-color:#fb8500;
+nav ul li form input {
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:18px;
+    font-weight:100;
+    display:block;
+    text-decoration:none;
+    text-align:center;
+    position:relative;
+    width: 100%;
+    background: none;
+    padding: 0;
+    margin: 0;
+    border:none;
+}
+nav ul li form {
+    padding: 0;
+    height: auto;
+    margin: 0;
+    background-color: #FFC49B;
+    border: none;
+    border-radius: 0;
+    margin-top: 0;
 }
 
 .copyright {
@@ -120,12 +127,12 @@ font-family:Raleway, sans-serif;
 }
 
 form {
-height:100%;
-border:none;
-border-radius:50px;
-background-color:#FFF8EB;
-margin:5vw 20vw;
-padding:3rem 0 10vw;
+	height:100%;
+	border:none;
+	border-radius:50px;
+	background-color:#FFF8EB;
+	margin:5vw 20vw;
+	padding:3rem 0 10vw;
 }
 
 html,body,#page {
@@ -198,4 +205,15 @@ ul.error_message > li:before {
 ul.error_message > li:after {
     content: '***';
     font-weight: 500;
+}
+
+table {
+    margin: 0;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap');
+
+h1,h2,h3,h4,h5,h6 {
+    font-family: 'Raleway';
+	text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
 }

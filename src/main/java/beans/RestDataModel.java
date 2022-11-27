@@ -1,6 +1,8 @@
 package beans;
 
 /**
+ * 
+ * This Model handles transposing the status and message for Rest endpoints
  * @author Tanner Ray
  *
  */

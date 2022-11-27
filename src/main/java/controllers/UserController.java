@@ -10,14 +10,23 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 
 import beans.User;
 import business.AuthenticationServiceInterface;
 import data.DatabaseServiceInterface2;
 
+/**
+ * Handles various controller functions for manipulating the user controller
+ * @author Josh Beck
+ *
+ */
 @ManagedBean
 @SessionScoped
 public class UserController {
+	
+	//Injects the correct values
 	@Inject
 	AuthenticationServiceInterface authService;
 	@Inject
@@ -27,60 +36,19 @@ public class UserController {
 		return this.service;
 	}
 	
+	
 	private User user = null;
-	public boolean userSet() {
-		return true;
-//		return this.getUser() == null;
-	}
-	public User getUser() {
-		System.out.println("Get users");
-		if (this.user == null) {
-			try {
-				Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
-				if (principal == null) {
-					System.out.println("The principal is currently null");
-					this.user = this.service.getAllUsers().get(0);
-					return this.user;
-				}
-				User usernameOnlyUser = new User();
-				usernameOnlyUser.setUsername(principal.getName());
-				User linkedUser = service.getUserByUsername(usernameOnlyUser);
-				if (linkedUser != null) {
-					System.out.println("We found a linked user");
-					this.user = linkedUser; 
-					return linkedUser;
-				} else {
-					System.out.println("We were not able to find a linked user so returning the first user.");
-					this.user = null;
-					return this.user;
-				}
-				
-			} catch (RuntimeException | SQLException e) {
-				e.printStackTrace();
-				return null;
-			}
-		}
-		return this.user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
 	
 	/**
-	 * Check if a principal user exists indicating log in
-	 * @return
+	 * Invalidate the session to remove the principal user
 	 */
-	public boolean loggedIn() {
-		return FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal() != null;
+	public String logOff() {
+		// Invalidate the Session to clear the security token
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+
+		return "index.xhtml";
 	}
-	
-//	/**
-//	 * Invalidate the session to remove the principal user
-//	 */
-//	public void logOff() {
-//		// Invalidate the Session to clear the security token
-//		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-//	}
 	
 	public String showUpdateForm(User u) {
 		
@@ -93,10 +61,9 @@ public class UserController {
 	public String updateUser() {
 		//update our user!
 		FacesContext context = FacesContext.getCurrentInstance();
-		User u = context.getApplication().evaluateExpressionGet(context, "#{user}", User.class);
 		
 		try {
-			service.updateUser(u);
+			service.updateUser(this.user);
 		} catch (RuntimeException | SQLException e) {
 			FacesContext context1 = FacesContext.getCurrentInstance();
 			context1.addMessage( null, new FacesMessage( "There was an issue connecting to the database.  Try again later." ));
@@ -126,4 +93,72 @@ public class UserController {
 		
 		return "products.xhtml";
 	}
+	
+	/************** HELPER FUNCITONS FOR SOME JSF CHECKS ***********/
+	boolean userSet = false;
+	
+	/**
+	 * This method tracks if there is a user stored in the principle and database or if not by returning the
+	 * tracking variable (userSet) after calling getUser() (this will keep the tracking
+	 * variable updated)
+	 * @return
+	 */
+	public boolean userSet() {
+		getUser();
+		return this.userSet;
+	}
+	
+	/**
+	 * Get the linked user from the database based on the principals username
+	 * @return
+	 */
+	public User getUser() {
+		if (this.user == null) {
+			try {
+				Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
+				if (principal == null) {
+					//The principal is null so return default user
+					this.user = this.service.getAllUsers().get(0);
+					userSet = true;
+					return this.user;
+				}
+				User usernameOnlyUser = new User();
+				usernameOnlyUser.setUsername(principal.getName());
+				User linkedUser = service.getUserByUsername(usernameOnlyUser);
+				if (linkedUser != null) {
+					//There is a user object linked to the principal username
+					this.user = linkedUser; 
+					userSet = true;
+					return linkedUser;
+				} else {
+					//We were unable to find a linked user so return null
+					this.user = null;
+					userSet = false;
+					return null;
+				}
+				
+			} catch (RuntimeException | SQLException e) {
+				e.printStackTrace();
+				userSet = false;
+				return null;
+			}
+		}
+		return this.user;
+	}
+	
+	public void setUser(User user) {
+		this.userSet = true;
+		this.user = user;
+	}
+	
+	/**
+	 * Check if a principal user exists indicating log in
+	 * @return
+	 */
+	public boolean loggedIn() {
+		return FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal() != null;
+	}
+	
 }
+
+

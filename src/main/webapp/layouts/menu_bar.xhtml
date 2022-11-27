@@ -12,13 +12,17 @@
 	        <ul>
 	            <li><a href="index.xhtml">Home</a></li>
 	            <c:if test="#{userController.loggedIn()}">
-	            	
 	            	<c:if test="#{userController.userSet()}">
 	            		<li><a href="user_update.xhtml">Edit User</a></li>
 	            	</c:if>
 	            	<c:if test="#{not userController.userSet()}">
 	            		<li><a href="registration_form.xhtml">Link Profile</a></li>
 	            	</c:if>
+	            	<li>
+		            	<h:form>
+		            		<h:commandButton value="Log Out" action="#{userController.logOff()}"></h:commandButton>
+		            	</h:form>
+	            	</li>
 	            </c:if>
 	           	<c:if test="#{not userController.loggedIn()}">
 	           		<li><a href="registration_form.xhtml">Register</a></li>

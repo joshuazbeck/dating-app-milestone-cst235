@@ -74,15 +74,5 @@ public class LoginController {
 		
 	}
 	
-	/**
-	 * Logout user
-	 * @return
-	 */
-	public String logout() {
-		
-		this.authService.invalidateUser();
-		loggedIn = false;
-		return "index.xhtml";
-	}
 	
 }

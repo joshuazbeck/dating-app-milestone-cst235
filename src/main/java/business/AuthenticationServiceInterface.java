@@ -30,10 +30,6 @@ public interface AuthenticationServiceInterface {
 	  * @return - true or false if user was logged in
 	  */
 	 public boolean userIsLoggedIn();
-	 /**
-	  * Logout user
-	  */
-	 public void invalidateUser();
 	  
 	 /**
 	  * Add a user to the database

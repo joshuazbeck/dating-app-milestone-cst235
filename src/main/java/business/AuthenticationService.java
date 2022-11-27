@@ -10,8 +10,14 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import beans.User;
+import beans.UserDataModel;
 import data.DatabaseServiceInterface2;
 
 /**
@@ -19,6 +25,7 @@ import data.DatabaseServiceInterface2;
  * @author Josh Beck
  *
  */
+@Path("/user")
 @Stateless
 @Local(AuthenticationServiceInterface.class)
 @LocalBean
@@ -29,6 +36,12 @@ public class AuthenticationService implements AuthenticationServiceInterface {
 	//Get an instance of the database service used to handle the "database"
 	@Inject
 	DatabaseServiceInterface2 db;
+	
+	@GET
+	@Path("/logout")
+	public void logout() {
+		System.out.println("Hey let's go!!");
+	}
 	
 	/**
 	 * This method is used to validate a user exists
@@ -53,18 +66,21 @@ public class AuthenticationService implements AuthenticationServiceInterface {
 		 }
 		 
 	 }
+	 /**
+	  * Returns if a user is logged in
+	  */
 	 public boolean userIsLoggedIn(){
 		 //Check the context if a user is logged in
 		 System.out.println("logged in " + FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userInstance").toString());
 		 return FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userInstance") != null;
 	 }
+	 
+	 /**
+	  * Getter for logged in user
+	  */
 	 public User getLoggedInUser(){
 		 //Check the context if a user is logged in
 		 return (User)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userInstance");
-	 }
-	 public void invalidateUser(){
-		 //Remove the user from the context
-		 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("userInstance");
 	 }
 	  
 	 /**

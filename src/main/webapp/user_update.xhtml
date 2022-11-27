@@ -98,7 +98,7 @@
 		           	</c:if>
 				</h:form>
 			</c:if>
-			<c:if test="#{userController.user != null}">
+			<c:if test="#{userController.user == null}">
 				<h1>No user linked to the logged in user</h1>
 			</c:if>
 			

@@ -2,6 +2,12 @@ package beans;
 
 import javax.xml.bind.annotation.*;
 
+/**
+ * This model assists in transfering the data
+ * for a REST response
+ * @author Tanner Ray
+ *
+ */
 @XmlRootElement(name="Response")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class UserDataModel {

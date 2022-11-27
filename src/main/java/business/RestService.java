@@ -3,6 +3,7 @@ package business;
 import java.sql.SQLException;
 
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -16,6 +17,11 @@ import beans.User;
 import beans.UserDataModel;
 import data.DatabaseServiceInterface2;
 
+/**
+ * This is the service responsible for managing the REST endpoint
+ * @author Josh Beck
+ *
+ */
 @Path("/users")
 @Produces({ "application/xml",  "application/json" })
 @Consumes({ "application/xml", "application/json" })
@@ -47,6 +53,12 @@ public class RestService {
 		}
 	}
 	
+	@GET
+	@Path("/logout")
+	public String logout() {
+//		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		return "hi";
+	}
 	@GET
 	@Path("/deleteuser/{id}")
 	@Produces(MediaType.APPLICATION_JSON)

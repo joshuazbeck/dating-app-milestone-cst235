@@ -11,9 +11,12 @@
 		<h:form>
 		<c:if test="#{user.loggedIn}">
      		<h1><h:outputText value="Good day #{user.username}!!  Let's find you a partner." /> </h1>
+     		<c:if test="{user.loggedIn}">
+     		We believe love goes so much further than appearance.  Let's find you (and help you find) an qualified significant other.  Create an accout to begin.
+     		</c:if>
          </c:if>
         	<c:if test="#{not user.loggedIn}">
-         	<h:outputText value="Welcome to the dreamland of finding your mate.  We take pride in getting you connected with the right person.  Create an account to start publishing your profile and finding love." /> 
+         	<h:outputText value="Welcome to the dreamland of finding your mate.  We take pride in getting you connected with the right person (more for just their looks).  Create an profile to start publishing your profile and finding love." /> 
          </c:if>
 	    </h:form>
 		</ui:define>

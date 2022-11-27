@@ -138,7 +138,7 @@ public class DatabaseService2 implements DatabaseServiceInterface2 {
 				User found = new User();
 				found.setFirstName(rs.getString("firstname"));
 				found.setLastName(rs.getString("lastname"));
-				found.setPhoneNumber(BigInteger.valueOf(rs.getInt("phone_num")));
+				found.setPhoneNumber(new BigInteger(rs.getString("phone_num")));
 				found.setAddress(rs.getString("address_line1"));
 				found.setAddress2(rs.getString("address_line2"));
 				found.setCity(rs.getString("city"));
@@ -304,17 +304,20 @@ public class DatabaseService2 implements DatabaseServiceInterface2 {
 	public void addDatingUser(DatingUser du) throws RuntimeException, SQLException {
 		Connection conn = null;
 		PreparedStatement stmt = null;
-
+		System.out.println("Set dating user");
 		conn = getConnection();
 		stmt = conn.prepareStatement(INSERT_DU, Statement.RETURN_GENERATED_KEYS);
+		System.out.println(du.getHeightInches() + " get height inches");
 		stmt.setString(1, du.getEducation());
 		stmt.setString(2, du.getHairColor());
 		stmt.setObject(3, du.getLanguagesSpoken());
 		stmt.setString(4, du.getEyeColor());
 		stmt.setInt(5, du.getHeightInches());
 
+		User user = new User();
+		user.setUsername("gcu");
 		
-		int user_id = this.getAllUsers().size() > 0 ? this.getAllUsers().get(0).getId() : 1;
+		int user_id = this.getUserByUsername(user) == null ? this.getAllUsers().get(0).getId() : this.getUserByUsername(user).getId();
 		
 		// MARK: Set to currently logged in user
 		stmt.setInt(6, user_id);
