@@ -1,5 +1,6 @@
 package controllers;
 
+import java.security.Principal;
 import java.sql.SQLException;
 
 import javax.faces.application.FacesMessage;
@@ -42,8 +43,22 @@ public class ProductController {
 		if (datingUser != null) {
 			//Add a user
 			try {
-				datingUser.setUserRef(service.getAllUsers().get(0));
-				service.addDatingUser(datingUser);
+				if (service.getAllUsers().size() > 0) {
+					Principal principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
+					User usernameOnlyUser = new User();
+					usernameOnlyUser.setUsername(principal.getName());
+					User linkedUser = service.getUserByUsername(usernameOnlyUser);
+
+					
+					datingUser.setUserRef(linkedUser != null ? linkedUser : service.getAllUsers().get(0));
+					service.addDatingUser(datingUser);
+				} else {
+					FacesContext context1 = FacesContext.getCurrentInstance();
+					context1.addMessage( null, new FacesMessage( "Link a profile an account before adding a profile." ));
+
+					return "";
+				}
+				 
 			} catch (RuntimeException | SQLException e) {
 				FacesContext context1 = FacesContext.getCurrentInstance();
 				context1.addMessage( null, new FacesMessage( "There was an issue connecting to the database.  Try again later." ));
